@@ -22,8 +22,6 @@ $ npm install
 
 ## 使用说明
 
-这只是一个文档包，你可以打印出 [spec.md](spec.md) 到输出窗口。
-
 ```sh
 $ npm run serve
 ```
