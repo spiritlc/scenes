@@ -1,0 +1,22 @@
+@mixin text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+};
+$font-color: #929292; // 灰色字体颜色
+$active-color: #2468f2;
+$default-color: #1b1c21; // 默认颜色
+
+
+// 重写elementui样式
+.form .form-item-sty {
+  padding: 0;
+}
+
+// 节点模板样式
+.basic-node {
+  &.active {
+    border: 1px solid #45a2fe!important;
+    box-shadow: 0 0 0 2px #b5e1ff;
+  }
+}
