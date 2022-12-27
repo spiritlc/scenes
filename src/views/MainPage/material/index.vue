@@ -5,7 +5,7 @@
         <menu-item v-bind="$attrs" :menu-list="conditionList"></menu-item>
       </el-tab-pane>
       <el-tab-pane label="逻辑" name="logic">
-        <menu-item v-bind="$attrs" :menu-list="logicData"></menu-item>
+        <menu-item v-bind="$attrs" :menu-list="logicList"></menu-item>
       </el-tab-pane>
       <el-tab-pane label="动作" name="actuib">
         <menu-item v-bind="$attrs" :menu-list="actionList"></menu-item>
@@ -46,6 +46,7 @@ import { conditionData, logicData, actionData } from "@/components/config";
 
 // 配置项
 const conditionList = ref<Array<MenuDataI>>(conditionData);
+const logicList = ref<Array<MenuDataI>>(logicData);
 const actionList = ref<Array<MenuDataI>>(actionData);
 
 // tabs
@@ -132,8 +133,8 @@ const getMaterial = () => {
     border-radius: 10px;
     background: #bbb;
   }
-  >>> .el-tabs__nav-scroll {
-    padding: 0 15px;
+  >>> .el-tabs__header {
+    padding-left: 20px;
   }
   >>> .el-tabs__active-bar {
     background-color: $active-color;

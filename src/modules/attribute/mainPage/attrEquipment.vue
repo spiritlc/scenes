@@ -279,6 +279,8 @@
 </template>
 <script>
 import { iotRequest } from "@/apis/api";
+// 同步父数据
+import useSyncAttrData from "@/modules/attribute/mainPage/useSyncAttrData";
 
 export default {
   props: {
@@ -385,6 +387,7 @@ export default {
   },
   mounted() {
     this.handleDeviceProductType();
+    useSyncAttrData(this.$emit, this.ruleForm);
   },
   methods: {
     // 处理外层用户编辑数据

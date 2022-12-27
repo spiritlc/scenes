@@ -1,24 +1,22 @@
-# scenes
+<img src="ULogo.png" alt="基于 x6 的场景编排工具"/>
 
-## Project setup
+
+[![](https://img.shields.io/badge/test-aaa-yellowgreen)](gitlab-url)
+  
+
+## 安装启动
+
+依赖 node v14.0.0+ 或 ES2015及更高版本和 async 方法支持.
+
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 项目结构
+[filename](tree.md)
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+[gitlab-image]: https://git.haier.net/assets/favicon-72a2cad5025aa931d6ea56c3201d1f18e68a8cd39788c7c80d5b2b82aa5143ef.png
+[gitlab-url]: https://git.haier.net/iot/haigeek/front_project/sceneChoreography

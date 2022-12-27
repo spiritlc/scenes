@@ -83,7 +83,7 @@
 import { iotRequest } from "@/apis/api";
 import getHMSfunc from "@/assets/js/getInitHMS";
 // 同步父数据
-import useSyncAttrData from "@/modules/attribute/attrData";
+import useSyncAttrData from "@/modules/attribute/mainPage/useSyncAttrData";
 
 export default {
   props: {

@@ -12,6 +12,9 @@ $default-color: #1b1c21; // 默认颜色
 .form .form-item-sty {
   padding: 0;
 }
+.el-tabs__nav-wrap {
+  padding-left: 20px !important;
+}
 
 // 节点模板样式
 .basic-node {

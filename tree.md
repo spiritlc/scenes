@@ -14,7 +14,7 @@ D:\workspace\scenes
 |  ├─declaration.d.ts
 |  ├─main.ts
 |  ├─shims-vue.d.ts
-|  ├─views
+|  ├─views  // 视图
 |  |   ├─test
 |  |   ├─MainPage
 |  |   |    ├─index.vue
@@ -23,11 +23,11 @@ D:\workspace\scenes
 |  |   |    |    └MenuItem.vue
 |  |   |    ├─attribute
 |  |   |    |     └index.vue
-|  ├─store
+|  ├─store  // vuex
 |  |   └index.ts
-|  ├─router
+|  ├─router // vue-router
 |  |   └index.ts
-|  ├─modules
+|  ├─modules  // 模型池
 |  |    ├─port
 |  |    |  ├─constants.ts
 |  |    |  ├─index.ts
@@ -66,7 +66,7 @@ D:\workspace\scenes
 |  |    |     |    ├─attrTime.vue
 |  |    |     |    ├─attrWeather.vue
 |  |    |     |    └register.ts
-|  ├─components
+|  ├─components // 全局组件
 |  |     ├─class-fold.vue
 |  |     ├─config.ts
 |  |     ├─menuBar.vue
@@ -87,7 +87,7 @@ D:\workspace\scenes
 |  |     |   └mysql.vue
 |  ├─assets
 |  |   ├─logo.png
-|  |   ├─js
+|  |   ├─js // 公共方法
 |  |   | ├─getInitHMS.ts
 |  |   | ├─graph.ts
 |  |   | ├─keyEvent.ts
@@ -97,16 +97,18 @@ D:\workspace\scenes
 |  |   |   └tips.png
 |  |   ├─css
 |  |   |  └var.scss
-|  |   ├─config
+|  |   ├─config // 项目有关配置
 |  |   |   ├─constants.ts
 |  |   |   ├─types
-|  |   |   |   └menu.ts
+|  |   |   |   ├─graphTools.ts
+|  |   |   |   ├─menu.ts
+|  |   |   |   └ports.ts
 |  |   |   ├─port
 |  |   |   ├─connecting
 |  |   |   |     ├─index.ts
 |  |   |   |     ├─types.ts
 |  |   |   |     └validateConnection.ts
-|  ├─apis
+|  ├─apis // 接口请求
 |  |  ├─api.ts
 |  |  ├─scene.ts
 |  |  └types.ts

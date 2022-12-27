@@ -36,6 +36,8 @@ import { onMounted, ref } from "vue";
 import type { Graph, Node } from "@antv/x6";
 import type { Dnd } from "@antv/x6-plugin-dnd";
 import { graphToolsT } from "@/assets/config/types/graphTools";
+import { useNodeClick } from "./composition/useNodeClick";
+
 // 公共方法
 import { initGraph, initKeyboard } from "@/assets/js/graph";
 import { createDnd } from "@/assets/js/material";
@@ -60,8 +62,8 @@ const graph = ref<Graph>();
 const dnd = ref<Dnd>();
 
 // 当前选中节点
-const curSelectNode = ref<Node>();
-const BasicNode = ref<Element>();
+let curSelectNode = ref<Node | undefined>();
+let BasicNode = ref<Element | undefined>();
 // 通过子组件删除当前选中节点
 const delNode = () => {
   graph.value && graph.value.removeNode(curSelectNode.value as Node);
@@ -87,33 +89,19 @@ onMounted(() => {
   registerEdge([BASIC_EDGE]);
   // 初始化画布
   graph.value = initGraph(document.getElementById("container") as HTMLElement);
-  // const x6Json = localStorage.getItem("x6Json");
-  // if (x6Json) {
-  //   graph.value.fromJSON(JSON.parse(x6Json));
-  // }
   // 创建dnd实例
   dnd.value = createDnd(graph.value);
   // 在当前画布上初始化键盘快捷键
   initKeyboard(graph.value, ["copy", "paste", "cut", "undo", "redo"]);
   // 添加node点击事件
-  graph.value.on("node:click", ({ view, node }) => {
+  const clickNodeInstance = useNodeClick(graph.value);
+  curSelectNode = clickNodeInstance.curSelectNode;
+  BasicNode = clickNodeInstance.BasicNode;
+  // 添加画布空白点击事件
+  graph.value.on("blank:click", () => {
+    curSelectNode.value = undefined;
     if (BasicNode.value) {
       BasicNode.value.classList.remove("active");
-    }
-    BasicNode.value = view.container.querySelector(".basic-node") || undefined;
-    if (BasicNode.value) {
-      BasicNode.value.classList.add("active");
-    }
-    // 判断是否有选中过节点
-    if (curSelectNode.value) {
-      // 判断两次选中节点是否相同
-      if (curSelectNode.value !== node) {
-        curSelectNode.value = node;
-      } else {
-        curSelectNode.value = undefined;
-      }
-    } else {
-      curSelectNode.value = node;
     }
   });
 });
@@ -187,6 +175,7 @@ h2 {
 .attrs-bar {
   padding: 0 20px;
   width: 400px;
+  overflow-y: scroll;
   margin-left: 20px;
 }
 
