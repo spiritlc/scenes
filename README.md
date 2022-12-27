@@ -1,7 +1,7 @@
 <img src="ULogo.png" alt="基于 x6 的场景编排工具"/>
 
 
-[![](https://img.shields.io/badge/test-aaa-yellowgreen)](gitlab-url)
+[![](https://img.shields.io/badge/gitlab-sceneChoreography-\\?logo=gitlab)](gitlab-url)
   
 
 ## 安装启动
