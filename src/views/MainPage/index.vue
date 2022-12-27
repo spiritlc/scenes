@@ -114,7 +114,8 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 #container {
-  height: calc(100% - 20px);
+  height: calc(100% - 20px) !important;
+  width: calc(100% - 10px) !important;
 }
 .home {
   width: 100%;
