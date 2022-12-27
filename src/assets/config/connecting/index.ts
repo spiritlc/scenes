@@ -11,7 +11,7 @@ export default {
   allowBlank: false, // 是否允许连接到画布空白位置的点
   allowMulti: true, // 是否允许在相同的起始节点和终止之间创建多条边
   allowLoop: false, // 是否允许创建循环连线，即边的起始节点和终止节点为同一节点
-  allowNode: false,
+  allowNode: false, // 是否允许链接节点
   allowEdge: true,
   allowPort: true,
   highlight: true, // 拖动边时，是否高亮显示所有可用的节点

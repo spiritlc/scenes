@@ -5,37 +5,24 @@
       <h4>{{ nodeData.description }}</h4>
       <el-button @click="delNode">删除</el-button>
     </div>
-    <component
-      v-bind="$attrs"
-      :is="attributes[nodeData.attrType as keyof typeof attributes]"
-    ></component>
+    <component v-if="renderAttr" v-bind="$attrs" :is="renderAttr"></component>
+    <!-- :is="attributes[nodeData.attrType as keyof typeof attributes]" -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { getAttrMap } from "@/modules/attribute";
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { Node } from "@antv/x6";
-// 属性模板名称
-import {
-  EQUIPMENT_ATTR,
-  TIME_ATTR,
-  WEATHER_ATTR,
-  FENCE_ATTR,
-} from "@/modules/attribute/constants";
+import { getAttrTemplate } from "@/modules/attribute/index";
 
 const emit = defineEmits(["delNode"]);
-const props = defineProps({
-  node: Node,
+const props = defineProps<{
+  node: Node | undefined;
+}>();
+// 获取渲染属性模板
+const renderAttr = computed(() => {
+  return getAttrTemplate(nodeData.value.attrType);
 });
-// 获取需要的属性列表
-const attributes = getAttrMap([
-  EQUIPMENT_ATTR,
-  TIME_ATTR,
-  WEATHER_ATTR,
-  FENCE_ATTR,
-]);
-console.log(attributes);
 
 const nodeData = computed(() => {
   return (props.node && props.node.data) || {};

@@ -1,5 +1,3 @@
-
-
 // 工具栏
 export const TOOL_ZOOM = "zoom"; // 缩放
 export const TOOL_FULLSCREEN = "fullScreen";

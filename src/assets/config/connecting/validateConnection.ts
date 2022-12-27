@@ -11,6 +11,9 @@ export default function validateConnection(
     if (!checkPortType(sourcePort, targetPort)) {
       return false;
     }
+    if (checkSamePort(sourcePort, targetPort)) {
+      return false;
+    }
   }
   return true;
 }
@@ -20,6 +23,14 @@ export default function validateConnection(
  */
 function checkPortType(sourcePort: string, targetPort: string) {
   if (sourcePort.indexOf("Out") >= 0 && targetPort.indexOf("In") >= 0) {
+    return true;
+  }
+}
+/**
+ * 检验节点是否为同一类
+ */
+function checkSamePort(sourcePort: string, targetPort: string) {
+  if (sourcePort.split("-")[0] === targetPort.split("-")[0]) {
     return true;
   }
 }

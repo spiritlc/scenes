@@ -8,7 +8,7 @@
         <menu-item v-bind="$attrs" :menu-list="logicData"></menu-item>
       </el-tab-pane>
       <el-tab-pane label="动作" name="actuib">
-        <menu-item v-bind="$attrs" :menu-list="actionData"></menu-item>
+        <menu-item v-bind="$attrs" :menu-list="actionList"></menu-item>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 // 依赖
 import { onMounted, ref } from "vue";
-import { MenuConfig } from "@/assets/config/types/menu";
+import { MenuConfig, MenuDataI } from "@/assets/config/types/menu";
 // 物料
 import { registerNode } from "@/modules/material";
 import {
@@ -37,13 +37,16 @@ import {
   TIME_ATTR,
   WEATHER_ATTR,
   FENCE_ATTR,
+  DELAY_ATTR_ACTION,
 } from "@/modules/attribute/constants";
 
 import MenuItem from "./MenuItem.vue";
 
 import { conditionData, logicData, actionData } from "@/components/config";
 
-const conditionList = ref(conditionData);
+// 配置项
+const conditionList = ref<Array<MenuDataI>>(conditionData);
+const actionList = ref<Array<MenuDataI>>(actionData);
 
 // tabs
 const activeName = ref("condition");
@@ -55,11 +58,11 @@ onMounted(() => {
 // 获取左侧物料配置
 const getMaterial = () => {
   Promise.all([
-    fnGetAlltimer(),
-    fnGetAllweather(),
-    fnGetAllgeofence(),
-    fnGetAllDelay(),
-  ]).then(([timeRes, weatherRes, geoRes]) => {
+    fnGetAlltimer(), // 时间条件
+    fnGetAllweather(), // 天气条件
+    fnGetAllgeofence(), // 地理围栏条件
+    fnGetAllDelay(), // 动作
+  ]).then(([timeRes, weatherRes, geoRes, delayRes]) => {
     // 定时条件
     if (timeRes && timeRes.data) {
       conditionList.value[1].children = timeRes.data.map((item: MenuConfig) => {
@@ -92,28 +95,17 @@ const getMaterial = () => {
         };
       });
     }
-    console.log(conditionList);
-    // console.log(weatherRes);
-    // if (equipmentRes.data) {
-    //   conditionList.value[1].children = {
-    //     ...equipmentRes,
-    //     attrType: EQUIPMENT_ATTR,
-    //     shapeType: BASIC_CONDITION_NODE,
-    //   };
-    // }
+    // 延时动作
+    if (delayRes && delayRes.data) {
+      actionList.value[2].children = delayRes.data.map((item: MenuConfig) => {
+        return {
+          ...item,
+          attrType: DELAY_ATTR_ACTION, // 属性模板
+          shapeType: BASIC_ACTION_NODE, // 物料模板
+        };
+      });
+    }
   });
-  // .then((res) => {
-  //   this.conditionList[1].children = this.fnDragType(res.data, "output");
-  // });
-  // .then((res) => {
-  //   this.conditionList[2].children = this.fnDragType(res.data, "output");
-  // });
-  // .then((res) => {
-  //   this.conditionList[3].children = this.fnDragType(res.data, "output");
-  // });
-  // .then((res) => {
-  //   this.actionList[2].children = this.fnDragType(res.data, "onlyIn");
-  // });
 };
 </script>
 <style lang="scss" scoped>

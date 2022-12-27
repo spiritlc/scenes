@@ -12,12 +12,13 @@ export default {
     graph: Graph,
   },
   methods: {
-    // saveFn() {
-    //   localStorage.setItem(
-    //     "x6Json",
-    //     JSON.stringify((this.graph as Graph).toJSON({ diff: true }))
-    //   );
-    // },
+    saveFn() {
+      console.log(this.graph.toJSON({ diff: true }));
+      localStorage.setItem(
+        "x6Json",
+        JSON.stringify(this.graph.toJSON({ diff: true }))
+      );
+    },
   },
 };
 </script>

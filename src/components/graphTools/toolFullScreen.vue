@@ -13,11 +13,11 @@ export default {
   },
   methods: {
     centerFn() {
-      // if (this.graph) {
-      //   const num = 1 - this.graph.zoom();
-      //   num > 1 ? this.graph.zoom(num * -1) : this.graph.zoom(num);
-      //   this.graph.centerContent();
-      // }
+      if (this.graph) {
+        const num = 1 - this.graph.zoom();
+        num > 1 ? this.graph.zoom(num * -1) : this.graph.zoom(num);
+        this.graph.centerContent();
+      }
     },
   },
 };

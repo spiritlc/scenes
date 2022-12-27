@@ -12,29 +12,9 @@
 
 <script setup lang="ts">
 import toolsComponents from ".";
-console.log(toolsComponents);
-defineProps({
-  tools: Array,
-});
-// export default {
-//   props: {
-//     tools: {
-//       type: Array,
-//       default() {
-//         return [];
-//       },
-//     },
-//   },
-//   data() {
-//     return {
-//       toolsComponents,
-//     };
-//   },
-//   created() {
-//     console.log(this.tools);
-//     console.log(this.toolsComponents);
-//   },
-// };
+defineProps<{
+  tools: Array<keyof typeof toolsComponents>;
+}>();
 </script>
 
 <style lang="scss" scoped></style>

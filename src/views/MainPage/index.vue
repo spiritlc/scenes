@@ -14,8 +14,11 @@
     <!-- 右侧属性栏 -->
     <div class="attrs-bar" v-show="curSelectNode">
       <attribute-block
+        v-show="curSelectNode"
         :key="curSelectNode && curSelectNode.id"
         :node="curSelectNode"
+        :sing-data="curSelectNode?.data.attrData || {}"
+        @sync-data="syncData"
         @delNode="delNode"
       >
       </attribute-block>
@@ -63,6 +66,12 @@ const delNode = () => {
   graph.value && graph.value.removeNode(curSelectNode.value as Node);
   curSelectNode.value = undefined;
 };
+// 子组件数据同步给父组件
+const syncData = (data: object) => {
+  if (curSelectNode.value) {
+    curSelectNode.value.data.attrData = data;
+  }
+};
 
 // 工具栏配置项
 const tools = [TOOL_ZOOM, TOOL_FULLSCREEN, TOOL_SAVE, TOOL_DISABLED];
@@ -72,12 +81,16 @@ onMounted(() => {
   registerEdge([BASIC_EDGE]);
   // 初始化画布
   graph.value = initGraph(document.getElementById("container") as HTMLElement);
+  // const x6Json = localStorage.getItem("x6Json");
+  // if (x6Json) {
+  //   graph.value.fromJSON(JSON.parse(x6Json));
+  // }
   // 创建dnd实例
   dnd.value = createDnd(graph.value);
   // 在当前画布上初始化键盘快捷键
   initKeyboard(graph.value, ["copy", "paste", "cut", "undo", "redo"]);
   // 添加node点击事件
-  graph.value.on("node:click", ({ view, node, e }) => {
+  graph.value.on("node:click", ({ view, node }) => {
     if (BasicNode.value) {
       BasicNode.value.classList.remove("active");
     }
@@ -166,7 +179,7 @@ h2 {
 
 .attrs-bar {
   padding: 0 20px;
-  width: 300px;
+  width: 400px;
   margin-left: 20px;
 }
 

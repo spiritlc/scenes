@@ -82,6 +82,9 @@
 <script>
 import { iotRequest } from "@/apis/api";
 import getHMSfunc from "@/assets/js/getInitHMS";
+// 同步父数据
+import useSyncAttrData from "@/modules/attribute/attrData";
+
 export default {
   props: {
     singData: {
@@ -191,6 +194,7 @@ export default {
         });
       }
     }
+    useSyncAttrData(this.$emit, this.value); // 同步数据
   },
   methods: {
     getTimer() {

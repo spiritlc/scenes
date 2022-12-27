@@ -31,11 +31,11 @@ import { getPortConfig } from "@/modules/port";
 import { Graph } from "@antv/x6";
 import { Dnd } from "@antv/x6-plugin-dnd";
 
-const props = defineProps({
-  menuList: Array,
-  graph: Graph,
-  dnd: Dnd,
-});
+const props = defineProps<{
+  menuList: Array<MenuDataI>;
+  graph: Graph;
+  dnd: Dnd;
+}>();
 // 拖拽生成节点
 const addNode = (e: MouseEvent, item: MenuConfig) => {
   if (props.graph && props.dnd) {

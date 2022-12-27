@@ -1,5 +1,10 @@
 // 属性静态数据
-import { EQUIPMENT_ATTR } from "@/modules/attribute/constants";
+
+import {
+  EQUIPMENT_ATTR,
+  EQUIPMENT_ATTR_ACTION,
+  MESSAGE_ATTR_ACTION,
+} from "@/modules/attribute/constants";
 // 物料静态数据
 import {
   BASIC_CONDITION_NODE,
@@ -134,7 +139,7 @@ export const logicData: Array<MenuDataI> = [
     ],
   },
 ];
-export const actionData = [
+export const actionData: Array<MenuDataI> = [
   {
     className: "设备动作",
     classCode: "equipmentActioin",
@@ -144,7 +149,7 @@ export const actionData = [
         name: "prodTypeAction",
         description: "设备执行",
         icon: "https://resource.haigeek.com/download/resource/selfService/portal/img/41899b4c118d410687b0c199375cc39b.png",
-        dragType: "onlyIn",
+        attrType: EQUIPMENT_ATTR_ACTION,
         shapeType: BASIC_ACTION_NODE,
       },
     ],
@@ -158,7 +163,7 @@ export const actionData = [
         name: "messagePush",
         description: "消息通知",
         icon: "https://resource.haigeek.com/download/resource/selfService/portal/img/41899b4c118d410687b0c199375cc39b.png",
-        dragType: "onlyIn",
+        attrType: MESSAGE_ATTR_ACTION,
         shapeType: BASIC_ACTION_NODE,
       },
     ],
