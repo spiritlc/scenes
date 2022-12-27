@@ -17,11 +17,11 @@
         v-show="curSelectNode"
         :key="curSelectNode && curSelectNode.id"
         :node="curSelectNode"
-        :sing-data="curSelectNode?.data.attrData || {}"
         @sync-data="syncData"
         @delNode="delNode"
       >
       </attribute-block>
+      <!-- :sing-data="curSelectNode?.data.attrData || {}" -->
       <!-- <footer class="footer">
         <el-button type="primary" size="small" @click="submit">确定</el-button>
       </footer> -->
@@ -35,6 +35,7 @@
 import { onMounted, ref } from "vue";
 import type { Graph, Node } from "@antv/x6";
 import type { Dnd } from "@antv/x6-plugin-dnd";
+import { graphToolsT } from "@/assets/config/types/graphTools";
 // 公共方法
 import { initGraph, initKeyboard } from "@/assets/js/graph";
 import { createDnd } from "@/assets/js/material";
@@ -74,7 +75,12 @@ const syncData = (data: object) => {
 };
 
 // 工具栏配置项
-const tools = [TOOL_ZOOM, TOOL_FULLSCREEN, TOOL_SAVE, TOOL_DISABLED];
+const tools: Array<graphToolsT> = [
+  TOOL_ZOOM,
+  TOOL_FULLSCREEN,
+  TOOL_SAVE,
+  TOOL_DISABLED,
+];
 
 onMounted(() => {
   // 注册线

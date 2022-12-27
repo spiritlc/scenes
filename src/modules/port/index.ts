@@ -2,7 +2,7 @@
 import commonPorts from "./common";
 
 // 所有节点的映射关系
-const portsMap = {
+export const portsMap = {
   ...commonPorts,
 };
 
