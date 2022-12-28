@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "lint-staged"
+    "lint": "vue-cli-service lint"
   },
   "husky": {
     "hooks": {
@@ -14,7 +14,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,ts,vue}": [
-      "vue-cli-service lint"
+      "npm run lint"
     ]
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 <template>
   <div class="basic-node">
-    <img class="basic-node__icon" :src="nodeConfig.icon" alt="">
+    <img class="basic-node__icon" :src="nodeConfig.icon" alt="" />
     <div class="node-name">{{ nodeConfig.description }}</div>
     <!-- {{  nodeConfig.attrData }} -->
     <!-- <div>
@@ -10,23 +10,25 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        nodeConfig: {}
-      }
+export default {
+  data() {
+    return {
+      nodeConfig: {},
+    };
+  },
+  inject: ["getNode"],
+  mounted() {
+    const node = this.getNode();
+    this.nodeConfig = node.data;
+  },
+  computed: {
+    configArr() {
+      return Object.keys(this.nodeConfig.attrData).map(
+        (key) => this.nodeConfig.attrData[key]
+      );
     },
-    inject: ["getNode"],
-    mounted() {
-      const node = this.getNode();
-      this.nodeConfig = node.data
-    },
-    computed: {
-      configArr() {
-        return Object.keys(this.nodeConfig.attrData).map(key => this.nodeConfig.attrData[key])
-      }
-    }
-  }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -34,7 +36,7 @@
   border: 1px solid #ccc;
   display: flex;
   padding: 10px;
-  background: #FFF;
+  background: #fff;
 }
 .basic-node__icon {
   width: 20px;

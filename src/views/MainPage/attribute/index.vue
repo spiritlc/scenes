@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 import { Node } from "@antv/x6";
 import { getAttrTemplate } from "@/modules/attribute/index";
 
