@@ -191,7 +191,7 @@ h2 {
 
 header {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .item {

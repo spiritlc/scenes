@@ -133,14 +133,14 @@ const getMaterial = () => {
     border-radius: 10px;
     background: #bbb;
   }
-  >>> .el-tabs__header {
+  ::v-deep(.el-tabs__header) {
     padding-left: 20px;
   }
-  >>> .el-tabs__active-bar {
+  ::v-deep(.el-tabs__active-bar) {
     background-color: $active-color;
   }
-  >>> .el-tabs__item:hover,
-  >>> .el-tabs__item.is-active {
+  ::v-deep(.el-tabs__item:hover),
+  ::v-deep(.el-tabs__item.is-active) {
     color: $active-color;
   }
 }
