@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "lint-staged"
+    "lint": "eslint src"
   },
   "husky": {
     "hooks": {
