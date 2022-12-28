@@ -1,3 +1,6 @@
+/**
+ * 画布添加节点点击事件
+ */
 import { ref } from "vue";
 import { Graph, Node } from "@antv/x6";
 

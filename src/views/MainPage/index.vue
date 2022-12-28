@@ -7,7 +7,11 @@
     <!-- 画布部分 -->
     <div class="canvas-card">
       <header>
-        <graph-tools :tools="tools" :graph="graph"></graph-tools>
+        <graph-tools
+          :tools="tools"
+          :graph="graph"
+          @save-data="saveData"
+        ></graph-tools>
       </header>
       <div id="container"></div>
     </div>
@@ -37,10 +41,11 @@ import type { Graph, Node } from "@antv/x6";
 import type { Dnd } from "@antv/x6-plugin-dnd";
 import { graphToolsT } from "@/assets/config/types/graphTools";
 import { useNodeClick } from "./composition/useNodeClick";
-
 // 公共方法
 import { initGraph, initKeyboard } from "@/assets/js/graph";
 import { createDnd } from "@/assets/js/material";
+// 私有方法
+import { transData } from "./utils/transData";
 // 自定义物料渲染
 import Material from "./material/index.vue";
 // 工具栏
@@ -74,6 +79,11 @@ const syncData = (data: object) => {
   if (curSelectNode.value) {
     curSelectNode.value.data.attrData = data;
   }
+};
+// 保存数据
+const saveData = (data: object) => {
+  console.log(data);
+  transData();
 };
 
 // 工具栏配置项

@@ -4,22 +4,21 @@
   </el-tooltip>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { Graph } from "@antv/x6";
+const props = defineProps<{
+  graph?: Graph;
+}>();
+const emit = defineEmits(["saveData"]);
 
-export default {
-  props: {
-    graph: Graph,
-  },
-  methods: {
-    saveFn() {
-      console.log(this.graph.toJSON({ diff: true }));
-      localStorage.setItem(
-        "x6Json",
-        JSON.stringify(this.graph.toJSON({ diff: true }))
-      );
-    },
-  },
+const saveFn = () => {
+  if (props.graph) {
+    emit("saveData", props.graph.toJSON({ diff: true }));
+  }
+  // localStorage.setItem(
+  //   "x6Json",
+  //   JSON.stringify(props.graph.toJSON({ diff: true }))
+  // );
 };
 </script>
 
