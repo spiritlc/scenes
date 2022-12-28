@@ -18,6 +18,7 @@
 
 ```sh
 $ npm install
+$ npm run prepare
 ```
 
 ## 使用说明

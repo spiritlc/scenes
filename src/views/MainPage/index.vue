@@ -83,7 +83,7 @@ const syncData = (data: object) => {
 // 保存数据
 const saveData = (data: object) => {
   console.log(data);
-  // transData();
+  transData();
 };
 
 // 工具栏配置项
