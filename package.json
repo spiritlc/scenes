@@ -13,8 +13,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,vue}": [
-      "echo 'aa' && eslint --fix"
+    "src/**/*.{js,ts,vue}": [
+      "vue-cli-service lint"
     ]
   },
   "dependencies": {
