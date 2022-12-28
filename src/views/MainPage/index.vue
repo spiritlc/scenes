@@ -45,7 +45,7 @@ import { useNodeClick } from "./composition/useNodeClick";
 import { initGraph, initKeyboard } from "@/assets/js/graph";
 import { createDnd } from "@/assets/js/material";
 // 私有方法
-import { transData } from "./utils/transData";
+import transData from "./utils/transData";
 // 自定义物料渲染
 import Material from "./material/index.vue";
 // 工具栏

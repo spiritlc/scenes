@@ -5,18 +5,17 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "eslint src"
+    "lint": "lint-staged"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
-    },
-    "lint-staged": {
-      "**/*.{js,ts,vue}": [
-        "npm run lint",
-        "git add"
-      ]
     }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,vue}": [
+      "eslint"
+    ]
   },
   "dependencies": {
     "@antv/x6": "^2.0.0",
