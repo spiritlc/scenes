@@ -1,7 +1,7 @@
 /**
  * 连接桩相关方法
  */
-import portConfig from "@/modules/port/common";
+// import portConfig from "@/modules/port/common";
 import { Node } from "@antv/x6";
 
 /**
@@ -11,6 +11,7 @@ import { Node } from "@antv/x6";
  * 2.单个链接桩直接获取
  */
 export const getPortConfig = (type: string) => {
+  console.log(type);
   // return portConfig[type] || {};
   // 单个链接桩
 };
