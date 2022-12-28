@@ -3,7 +3,6 @@
  * 处理画布节点
  *
  */
-import { register } from "@antv/x6-vue-shape";
 import { Dnd } from "@antv/x6-plugin-dnd";
 import type { Graph } from "@antv/x6";
 import { MenuConfig } from "@/assets/config/types/menu";

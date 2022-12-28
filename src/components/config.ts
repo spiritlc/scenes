@@ -14,60 +14,6 @@ import {
 // 物料配置types
 import { MenuDataI } from "@/assets/config/types/menu";
 
-const config = [
-  {
-    type: "output",
-    label: "条件1",
-    name: "条件1",
-    data: {
-      name: "条件",
-    },
-  },
-  {
-    type: "output",
-    label: "条件2",
-    name: "条件2",
-    data: {
-      name: "条件",
-    },
-  },
-  {
-    type: "onlyIn",
-    label: "动作1",
-    name: "动作1",
-    data: {
-      name: "动作",
-    },
-  },
-  {
-    type: "onlyIn",
-    label: "动作2",
-    name: "动作2",
-    data: {
-      name: "动作",
-    },
-  },
-  {
-    type: "condition",
-    label: "AND",
-    name: "判断-且",
-    data: {
-      name: "condition",
-      t: "",
-      f: "",
-    },
-  },
-  {
-    type: "condition",
-    label: "OR",
-    name: "判断-或",
-    data: {
-      name: "condition",
-      t: "",
-      f: "",
-    },
-  },
-];
 export const conditionData: Array<MenuDataI> = [
   {
     className: "设备条件",
