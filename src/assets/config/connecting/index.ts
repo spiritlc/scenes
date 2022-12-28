@@ -1,7 +1,7 @@
 /**
  * 链接桩链接规则
  */
-import { Graph, Shape } from "@antv/x6";
+import { Shape } from "@antv/x6";
 import validateConnection from "./validateConnection";
 import { BASIC_EDGE } from "@/modules/edge/constants";
 
