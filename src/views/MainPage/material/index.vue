@@ -19,7 +19,7 @@
 import { onMounted, ref } from "vue";
 import { MenuConfig, MenuDataI } from "@/assets/config/types/menu";
 // 物料
-import { registerNode } from "@/modules/material";
+import { registerMaterial } from "@/modules/material";
 import {
   BASIC_CONDITION_NODE,
   BASIC_RELATION_NODE,
@@ -53,7 +53,7 @@ const actionList = ref<Array<MenuDataI>>(actionData);
 const activeName = ref("condition");
 // 侧边栏渲染
 onMounted(() => {
-  registerNode([BASIC_CONDITION_NODE, BASIC_RELATION_NODE, BASIC_ACTION_NODE]); // 注册物料节点
+  registerMaterial([BASIC_CONDITION_NODE, BASIC_RELATION_NODE, BASIC_ACTION_NODE]); // 注册物料节点
   getMaterial(); // 获取物料配置项,并且与本地物料模板建立关联关系
 });
 // 获取左侧物料配置

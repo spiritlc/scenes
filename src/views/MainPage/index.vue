@@ -41,13 +41,14 @@ import type { Graph, Node } from "@antv/x6";
 import type { Dnd } from "@antv/x6-plugin-dnd";
 import { graphToolsT } from "@/assets/config/types/graphTools";
 import { useNodeClick } from "./composition/useNodeClick";
-// 公共方法
-import { initGraph, initKeyboard } from "@/assets/js/graph";
-import { createDnd } from "@/assets/js/material";
+import useInitGraph from "./composition/useInitGraph";
 // 私有方法
 import transData from "./utils/transData";
 // 自定义物料渲染
 import Material from "./material/index.vue";
+// 画布
+import { MAIN_PAGE_GRAPH } from "@/modules/graph/constants";
+import getGraphConfig from "@/modules/graph";
 // 工具栏
 import GraphTools from "@/components/graphTools/index.vue";
 import {
@@ -83,7 +84,7 @@ const syncData = (data: object) => {
 // 保存数据
 const saveData = (data: object) => {
   console.log(data);
-  transData();
+  transData(data);
 };
 
 // 工具栏配置项
@@ -98,13 +99,14 @@ onMounted(() => {
   // 注册线
   registerEdge([BASIC_EDGE]);
   // 初始化画布
-  graph.value = initGraph(document.getElementById("container") as HTMLElement);
-  // 创建dnd实例
-  dnd.value = createDnd(graph.value);
-  // 在当前画布上初始化键盘快捷键
-  initKeyboard(graph.value, ["copy", "paste", "cut", "undo", "redo"]);
+  const graphConfig = getGraphConfig(MAIN_PAGE_GRAPH, {
+    container: document.getElementById("container") as HTMLElement,
+  });
+  const graphInstance = useInitGraph(graphConfig);
+  graph.value = graphInstance.graph.value;
+  dnd.value = graphInstance.dnd.value;
   // 添加node点击事件
-  const clickNodeInstance = useNodeClick(graph.value);
+  const clickNodeInstance = useNodeClick(graph.value as Graph);
   curSelectNode = clickNodeInstance.curSelectNode;
   BasicNode = clickNodeInstance.BasicNode;
   // 添加画布空白点击事件

@@ -4,7 +4,6 @@
 import { Graph } from "@antv/x6";
 import { Snapline } from "@antv/x6-plugin-snapline";
 import { Export } from "@antv/x6-plugin-export";
-import connecting from "@/assets/config/connecting";
 import { Keyboard } from "@antv/x6-plugin-keyboard";
 import {
   initKeyCopy,
@@ -21,53 +20,8 @@ import { History } from "@antv/x6-plugin-history"; // 历史记录
  * 初始化画布
  * @param { HTMLElement } dom
  */
-export const initGraph = (dom: HTMLElement) => {
-  const graph = new Graph({
-    connecting,
-    container: dom,
-    autoResize: true,
-    grid: {
-      type: "mesh",
-      size: 20, // 网格大小 10px
-      visible: true, // 渲染网格背景
-      args: {
-        color: "#eeeeee", // 网格线/点颜色
-        thickness: 2, // 网格线宽度/网格点大小
-      },
-    },
-    background: false, // 背景（透明）
-    panning: {
-      enabled: true,
-      eventTypes: ["leftMouseDown", "mouseWheel"],
-    },
-    mousewheel: {
-      enabled: true,
-      modifiers: "ctrl",
-      factor: 1.1,
-      maxScale: 1.5,
-      minScale: 0.5,
-    },
-    highlighting: {
-      magnetAdsorbed: {
-        name: "stroke",
-        args: {
-          attrs: {
-            fill: "#fff",
-            stroke: "#31d0c6",
-            strokeWidth: 4,
-          },
-        },
-      },
-    },
-    // selecting: {
-    //   enabled: true,
-    //   multiple: true,
-    //   rubberEdge: true,
-    //   rubberNode: true,
-    //   modifiers: "shift",
-    //   rubberband: true,
-    // },
-  });
+export const initGraph = (options: object) => {
+  const graph = new Graph(options);
   // 是否启用对其线
   graph.use(
     new Snapline({

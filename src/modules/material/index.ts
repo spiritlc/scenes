@@ -6,8 +6,8 @@ const registerMap = {
   ...commonRegisterMap,
 };
 
-// 批量注册节点
-export const registerNode = (nodeName: Array<keyof typeof registerMap>) => {
+// 批量注册物料
+export const registerMaterial = (nodeName: Array<keyof typeof registerMap>) => {
   nodeName.forEach((name) => {
     registerMap[name]();
   });
