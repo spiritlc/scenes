@@ -42,8 +42,6 @@ import type { Dnd } from "@antv/x6-plugin-dnd";
 import { graphToolsT } from "@/assets/config/types/graphTools";
 import { useNodeClick } from "./composition/useNodeClick";
 import useInitGraph from "./composition/useInitGraph";
-// 私有方法
-import transData from "./utils/transData";
 // 自定义物料渲染
 import Material from "./material/index.vue";
 // 画布
@@ -84,7 +82,6 @@ const syncData = (data: object) => {
 // 保存数据
 const saveData = (data: object) => {
   console.log(data);
-  transData(data);
 };
 
 // 工具栏配置项

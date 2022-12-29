@@ -16,98 +16,17 @@
 
 <script lang="ts" setup>
 // 依赖
-import { onMounted, ref } from "vue";
-import { MenuConfig, MenuDataI } from "@/assets/config/types/menu";
-// 物料
-import { registerMaterial } from "@/modules/material";
-import {
-  BASIC_CONDITION_NODE,
-  BASIC_RELATION_NODE,
-  BASIC_ACTION_NODE,
-} from "@/modules/material/constants";
-// api
-import {
-  fnGetAlltimer,
-  fnGetAllweather,
-  fnGetAllgeofence,
-  fnGetAllDelay,
-} from "@/apis/scene";
-// 属性配置
-import {
-  TIME_ATTR,
-  WEATHER_ATTR,
-  FENCE_ATTR,
-  DELAY_ATTR_ACTION,
-} from "@/modules/attribute/constants";
-
+import { ref } from "vue";
 import MenuItem from "./MenuItem.vue";
-
-import { conditionData, logicData, actionData } from "@/components/config";
+import useInitMaterial from "@/views/MainPage/composition/useInitMaterial";
 
 // 配置项
-const conditionList = ref<Array<MenuDataI>>(conditionData);
-const logicList = ref<Array<MenuDataI>>(logicData);
-const actionList = ref<Array<MenuDataI>>(actionData);
-
+const materialObj = useInitMaterial();
+const conditionList = materialObj.conditionList;
+const logicList = materialObj.logicList;
+const actionList = materialObj.actionList;
 // tabs
 const activeName = ref("condition");
-// 侧边栏渲染
-onMounted(() => {
-  registerMaterial([BASIC_CONDITION_NODE, BASIC_RELATION_NODE, BASIC_ACTION_NODE]); // 注册物料节点
-  getMaterial(); // 获取物料配置项,并且与本地物料模板建立关联关系
-});
-// 获取左侧物料配置
-const getMaterial = () => {
-  Promise.all([
-    fnGetAlltimer(), // 时间条件
-    fnGetAllweather(), // 天气条件
-    fnGetAllgeofence(), // 地理围栏条件
-    fnGetAllDelay(), // 动作
-  ]).then(([timeRes, weatherRes, geoRes, delayRes]) => {
-    // 定时条件
-    if (timeRes && timeRes.data) {
-      conditionList.value[1].children = timeRes.data.map((item: MenuConfig) => {
-        return {
-          ...item,
-          attrType: TIME_ATTR, // 属性模板
-          shapeType: BASIC_CONDITION_NODE, // 物料模板
-        };
-      });
-    }
-    // 天气条件
-    if (weatherRes && weatherRes.data) {
-      conditionList.value[2].children = weatherRes.data.map(
-        (item: MenuConfig) => {
-          return {
-            ...item,
-            attrType: WEATHER_ATTR, // 属性模板
-            shapeType: BASIC_CONDITION_NODE, // 物料模板
-          };
-        }
-      );
-    }
-    // 围栏信息
-    if (geoRes && geoRes.data) {
-      conditionList.value[3].children = geoRes.data.map((item: MenuConfig) => {
-        return {
-          ...item,
-          attrType: FENCE_ATTR, // 属性模板
-          shapeType: BASIC_CONDITION_NODE, // 物料模板
-        };
-      });
-    }
-    // 延时动作
-    if (delayRes && delayRes.data) {
-      actionList.value[2].children = delayRes.data.map((item: MenuConfig) => {
-        return {
-          ...item,
-          attrType: DELAY_ATTR_ACTION, // 属性模板
-          shapeType: BASIC_ACTION_NODE, // 物料模板
-        };
-      });
-    }
-  });
-};
 </script>
 <style lang="scss" scoped>
 .material-content {

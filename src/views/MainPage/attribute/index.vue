@@ -1,12 +1,11 @@
 <template>
   <div class="attribute-block">
     <div class="attribute-title">
-      <i></i>
+      <img :src="nodeData.icon" alt="" />
       <h4>{{ nodeData.description }}</h4>
-      <el-button @click="delNode">删除</el-button>
     </div>
+    <el-button @click="delNode">删除</el-button>
     <component v-if="renderAttr" v-bind="$attrs" :is="renderAttr"></component>
-    <!-- :is="attributes[nodeData.attrType as keyof typeof attributes]" -->
   </div>
 </template>
 
@@ -34,4 +33,14 @@ const delNode = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.attribute-title {
+  display: flex;
+  align-items: center;
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+  }
+}
+</style>
