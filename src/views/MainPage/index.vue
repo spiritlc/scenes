@@ -39,7 +39,6 @@
 import { onMounted, ref } from "vue";
 import type { Node } from "@antv/x6";
 import { graphToolsT } from "@/assets/config/types/graphTools";
-import { useNodeClick } from "./composition/useNodeClick";
 import useInitGraph from "./composition/useInitGraph";
 // 自定义物料渲染
 import Material from "./material/index.vue";
