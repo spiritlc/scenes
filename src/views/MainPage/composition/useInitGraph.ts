@@ -1,22 +1,32 @@
-// /**
-//  * 初始化画布
-//  */
-import { ref } from "vue";
+/**
+ * 初始化画布
+ */
+import { ref, onMounted } from "vue";
 import { Graph } from "@antv/x6";
 import { Dnd } from "@antv/x6-plugin-dnd";
 // 公共方法
 import { createDnd } from "@/assets/js/material";
-import { initGraph, initKeyboard } from "@/assets/js/graph";
+import { initKeyboard } from "@/assets/js/graph";
 
-export default function useInitGraph(graphConfig: object) {
+// 画布模型
+import { SCENE_GRAPH } from "@/modules/graph/template/constants";
+import { registerGraph } from "@/modules/graph/index";
+
+export default function useInitGraph() {
   const graph = ref<Graph>();
   const dnd = ref<Dnd>();
 
-  graph.value = initGraph(graphConfig);
-  // 创建dnd实例
-  dnd.value = createDnd(graph.value);
-  // 在当前画布上初始化键盘快捷键
-  initKeyboard(graph.value, ["copy", "paste", "cut", "undo", "redo"]);
+  onMounted(() => {
+    graph.value = registerGraph({
+      templateName: SCENE_GRAPH,
+      container: document.getElementById("container") as HTMLElement,
+    });
+    // 创建dnd实例
+    dnd.value = createDnd(graph.value);
+    // 在当前画布上初始化键盘快捷键
+    initKeyboard(graph.value, ["copy", "paste", "cut", "undo", "redo"]);
+  });
+
   return {
     graph,
     dnd,

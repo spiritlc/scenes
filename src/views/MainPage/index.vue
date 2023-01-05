@@ -37,16 +37,12 @@
 <script setup lang="ts">
 // 依赖
 import { onMounted, ref } from "vue";
-import type { Graph, Node } from "@antv/x6";
-import type { Dnd } from "@antv/x6-plugin-dnd";
+import type { Node } from "@antv/x6";
 import { graphToolsT } from "@/assets/config/types/graphTools";
 import { useNodeClick } from "./composition/useNodeClick";
 import useInitGraph from "./composition/useInitGraph";
 // 自定义物料渲染
 import Material from "./material/index.vue";
-// 画布
-import { MAIN_PAGE_GRAPH } from "@/modules/graph/constants";
-import getGraphConfig from "@/modules/graph";
 // 工具栏
 import GraphTools from "@/components/graphTools/index.vue";
 import {
@@ -62,15 +58,17 @@ import { registerEdge } from "@/modules/edge";
 import { BASIC_EDGE } from "@/modules/edge/constants";
 
 // 画布实例
-const graph = ref<Graph>();
-const dnd = ref<Dnd>();
+// 初始化画布
+const graphInstance = useInitGraph();
+const graph = graphInstance.graph;
+const dnd = graphInstance.dnd;
 
 // 当前选中节点
 let curSelectNode = ref<Node | undefined>();
 let BasicNode = ref<Element | undefined>();
 // 通过子组件删除当前选中节点
 const delNode = () => {
-  graph.value && graph.value.removeNode(curSelectNode.value as Node);
+  graph && graph.removeNode(curSelectNode.value as Node);
   curSelectNode.value = undefined;
 };
 // 子组件数据同步给父组件
@@ -95,24 +93,39 @@ const tools: Array<graphToolsT> = [
 onMounted(() => {
   // 注册线
   registerEdge([BASIC_EDGE]);
-  // 初始化画布
-  const graphConfig = getGraphConfig(MAIN_PAGE_GRAPH, {
-    container: document.getElementById("container") as HTMLElement,
-  });
-  const graphInstance = useInitGraph(graphConfig);
-  graph.value = graphInstance.graph.value;
-  dnd.value = graphInstance.dnd.value;
-  // 添加node点击事件
-  const clickNodeInstance = useNodeClick(graph.value as Graph);
-  curSelectNode = clickNodeInstance.curSelectNode;
-  BasicNode = clickNodeInstance.BasicNode;
-  // 添加画布空白点击事件
-  graph.value.on("blank:click", () => {
-    curSelectNode.value = undefined;
-    if (BasicNode.value) {
-      BasicNode.value.classList.remove("active");
-    }
-  });
+  if (graph.value && dnd.value) {
+    console.log("sdf", graph.value);
+
+    // 添加node点击事件
+    graph.value.on("node:click", ({ view, node }) => {
+      if (BasicNode.value) {
+        BasicNode.value.classList.remove("active");
+      }
+      BasicNode.value =
+        view.container.querySelector(".basic-node") || undefined;
+      if (BasicNode.value) {
+        BasicNode.value.classList.add("active");
+      }
+      // 判断是否有选中过节点
+      if (curSelectNode.value) {
+        // 判断两次选中节点是否相同
+        if (curSelectNode.value !== node) {
+          curSelectNode.value = node;
+        } else {
+          curSelectNode.value = undefined;
+        }
+      } else {
+        curSelectNode.value = node;
+      }
+    });
+    // 添加画布空白点击事件
+    graph.value.on("blank:click", () => {
+      curSelectNode.value = undefined;
+      if (BasicNode.value) {
+        BasicNode.value.classList.remove("active");
+      }
+    });
+  }
 });
 </script>
 <style lang="scss" scoped>

@@ -18,10 +18,10 @@ import { History } from "@antv/x6-plugin-history"; // 历史记录
 
 /**
  * 初始化画布
- * @param { HTMLElement } dom
+ * @param { object } options
  */
-export const initGraph = (options: object) => {
-  const graph = new Graph(options);
+export const initGraph = (options: object): Graph => {
+  const graph: Graph = new Graph(options);
   // 是否启用对其线
   graph.use(
     new Snapline({
