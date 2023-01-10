@@ -20,7 +20,10 @@ const props = defineProps<{
 }>();
 // 获取渲染属性模板
 const renderAttr = computed(() => {
-  return getAttrTemplate(nodeData.value.attrType);
+  if (nodeData.value.attr) {
+    return getAttrTemplate(nodeData.value.attr);
+  }
+  return null;
 });
 
 const nodeData = computed(() => {

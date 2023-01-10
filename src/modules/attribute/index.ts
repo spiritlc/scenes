@@ -15,6 +15,11 @@ export const getAttrMap = (attrNameArr: Array<keyof typeof attrMap>) => {
   return attrMapObj;
 };
 // 获取单独的属性模板
-export const getAttrTemplate = (attrType: keyof typeof attrMap) => {
-  return attrMap[attrType];
+export const getAttrTemplate = ({
+  template,
+}: {
+  template: keyof typeof attrMap;
+}) => {
+  console.log(template);
+  return attrMap[template];
 };

@@ -9,6 +9,7 @@ export default function createGraphRules(
   rulesArr: Array<keyof typeof graphRulesMap>,
   params: ValidateConnectionArgs
 ) {
+  console.log(params);
   return function () {
     const rulesLength = rulesArr.length;
     let validateRes = true;
@@ -18,6 +19,7 @@ export default function createGraphRules(
         break;
       }
     }
+    console.log(validateRes);
     return validateRes;
   };
 }

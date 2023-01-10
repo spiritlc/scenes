@@ -24,28 +24,29 @@
 
 <script lang="ts" setup>
 import ClassFold from "@/components/class-fold.vue";
-import { MenuDataI, MenuConfig } from "@/assets/config/types/menu";
+import {
+  ComponentDataI,
+  ComponentConfig,
+} from "@/assets/config/types/component";
 
 import { createNode } from "@/assets/js/material";
-import { getPortConfig } from "@/modules/port";
 import { Graph } from "@antv/x6";
 import { Dnd } from "@antv/x6-plugin-dnd";
 
 const props = defineProps<{
-  menuList: Array<MenuDataI>;
+  menuList: Array<ComponentDataI>;
   graph: Graph;
   dnd: Dnd;
 }>();
 // 拖拽生成节点
-const addNode = (e: MouseEvent, item: MenuConfig) => {
+const addNode = (e: MouseEvent, item: ComponentConfig) => {
   if (props.graph && props.dnd) {
     createNode({
       graph: props.graph,
       dnd: props.dnd,
       event: e,
       options: {
-        shape: item.shapeType, // 节点信息
-        ports: getPortConfig(item.shapeType), // 链接桩信息
+        shape: item.name, // 节点信息
       },
       data: { ...item },
     });

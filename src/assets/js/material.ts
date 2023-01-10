@@ -5,7 +5,7 @@
  */
 import { Dnd } from "@antv/x6-plugin-dnd";
 import type { Graph } from "@antv/x6";
-import { MenuConfig } from "@/assets/config/types/menu";
+import { ComponentConfig } from "@/assets/config/types/component";
 
 /**
  * 创建新dnd实例,用于预创建节点
@@ -35,7 +35,7 @@ export const createNode = ({
   dnd: Dnd;
   event: MouseEvent;
   options: any;
-  data: MenuConfig;
+  data: ComponentConfig;
 }) => {
   const node = graph.createNode(options);
   node.setData(data);

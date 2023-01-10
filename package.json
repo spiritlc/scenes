@@ -30,6 +30,7 @@
     "@antv/x6-vue-shape": "^2.0.0",
     "@element-plus/icons-vue": "^2.0.10",
     "element-plus": "^2.2.27",
+    "insert-css": "^2.0.0",
     "iot-axios": "^1.1.1",
     "node-sass": "^8.0.0",
     "sass": "^1.57.1",
@@ -40,6 +41,7 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@types/insert-css": "^2.0.1",
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",

@@ -1,15 +1,13 @@
-/**
- * 初始化画布
- */
+// 初始化画布模型
 import { ref, onMounted } from "vue";
 import { Graph } from "@antv/x6";
 import { Dnd } from "@antv/x6-plugin-dnd";
 // 公共方法
 import { createDnd } from "@/assets/js/material";
 import { initKeyboard } from "@/assets/js/graph";
-
-// 画布模型
+// 画布模板
 import { SCENE_GRAPH } from "@/modules/graph/template/constants";
+// 画布模型注册方法
 import { registerGraph } from "@/modules/graph/index";
 
 export default function useInitGraph() {

@@ -3,9 +3,11 @@
  */
 // 依赖方法
 import { ref } from "vue";
-import { registerMaterial } from "@/modules/material";
 // types
-import { MenuConfig, MenuDataI } from "@/assets/config/types/menu";
+import {
+  ComponentConfig,
+  ComponentDataI,
+} from "@/assets/config/types/component";
 // api
 import {
   fnGetAlltimer,
@@ -14,11 +16,7 @@ import {
   fnGetAllDelay,
 } from "@/apis/scene";
 // 静态数据
-import {
-  BASIC_CONDITION_NODE,
-  BASIC_RELATION_NODE,
-  BASIC_ACTION_NODE,
-} from "@/modules/material/constants";
+import { BASIC_NODE } from "@/modules/material/constants";
 import {
   TIME_ATTR,
   WEATHER_ATTR,
@@ -27,18 +25,16 @@ import {
 } from "@/modules/attribute/constants";
 // 配置项
 import { conditionData, logicData, actionData } from "@/components/config";
+import registerComponent from "@/modules/index";
+import { ACTION_OUT_PORT, ACTION_IN_PORT } from "@/modules/port/constants";
 
 export default function useInitMaterial() {
   // 配置项
-  const conditionList = ref<Array<MenuDataI>>(conditionData);
-  const logicList = ref<Array<MenuDataI>>(logicData);
-  const actionList = ref<Array<MenuDataI>>(actionData);
-  // 注册物料模型
-  registerMaterial([
-    BASIC_CONDITION_NODE,
-    BASIC_RELATION_NODE,
-    BASIC_ACTION_NODE,
-  ]);
+  const conditionList = ref<Array<ComponentDataI>>(conditionData);
+  const logicList = ref<Array<ComponentDataI>>(logicData);
+  const actionList = ref<Array<ComponentDataI>>(actionData);
+  const componentList = ref<Array<ComponentConfig>>([]);
+
   // 获取物料配置,建立数据和模型关联关系
   Promise.all([
     fnGetAlltimer(), // 时间条件
@@ -48,50 +44,95 @@ export default function useInitMaterial() {
   ]).then(([timeRes, weatherRes, geoRes, delayRes]) => {
     // 定时条件
     if (timeRes && timeRes.data) {
-      conditionList.value[1].children = timeRes.data.map((item: MenuConfig) => {
-        return {
-          ...item,
-          attrType: TIME_ATTR, // 属性模板
-          shapeType: BASIC_CONDITION_NODE, // 物料模板
-        };
-      });
+      conditionList.value[1].children = timeRes.data.map(
+        (item: ComponentConfig) => {
+          return {
+            ...item,
+            shape: {
+              template: BASIC_NODE,
+            },
+            port: {
+              templates: [ACTION_OUT_PORT, ACTION_IN_PORT],
+            },
+            attr: {
+              template: TIME_ATTR,
+            },
+          };
+        }
+      );
     }
     // 天气条件
     if (weatherRes && weatherRes.data) {
       conditionList.value[2].children = weatherRes.data.map(
-        (item: MenuConfig) => {
+        (item: ComponentConfig) => {
           return {
             ...item,
-            attrType: WEATHER_ATTR, // 属性模板
-            shapeType: BASIC_CONDITION_NODE, // 物料模板
+            shape: {
+              template: BASIC_NODE,
+            },
+            port: {
+              templates: [ACTION_OUT_PORT, ACTION_IN_PORT],
+            },
+            attr: {
+              template: WEATHER_ATTR,
+            },
           };
         }
       );
     }
     // 围栏信息
     if (geoRes && geoRes.data) {
-      conditionList.value[3].children = geoRes.data.map((item: MenuConfig) => {
-        return {
-          ...item,
-          attrType: FENCE_ATTR, // 属性模板
-          shapeType: BASIC_CONDITION_NODE, // 物料模板
-        };
-      });
+      conditionList.value[3].children = geoRes.data.map(
+        (item: ComponentConfig) => {
+          return {
+            ...item,
+            shape: {
+              template: BASIC_NODE,
+            },
+            port: {
+              templates: [ACTION_OUT_PORT, ACTION_IN_PORT],
+            },
+            attr: {
+              template: FENCE_ATTR,
+            },
+          };
+        }
+      );
     }
     // 延时动作
     if (delayRes && delayRes.data) {
-      actionList.value[2].children = delayRes.data.map((item: MenuConfig) => {
-        return {
-          ...item,
-          attrType: DELAY_ATTR_ACTION, // 属性模板
-          shapeType: BASIC_ACTION_NODE, // 物料模板
-        };
-      });
+      actionList.value[2].children = delayRes.data.map(
+        (item: ComponentConfig) => {
+          return {
+            ...item,
+            shape: {
+              template: BASIC_NODE,
+            },
+            port: {
+              templates: [ACTION_OUT_PORT, ACTION_IN_PORT],
+            },
+            attr: {
+              template: DELAY_ATTR_ACTION,
+            },
+          };
+        }
+      );
     }
+
+    conditionList.value.forEach((item) => {
+      componentList.value.push(...item.children);
+    });
+    logicList.value.forEach((item) => {
+      componentList.value.push(...item.children);
+    });
+    console.log(componentList.value);
+    registerComponent(componentList.value);
   });
+
   return {
     conditionList, // 条件
     logicList, // 逻辑关系
     actionList, // 动作
+    componentList,
   };
 }

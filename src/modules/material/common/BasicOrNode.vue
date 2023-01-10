@@ -1,11 +1,6 @@
 <template>
   <div class="basic-node">
-    <img class="basic-node__icon" :src="nodeConfig.icon" alt="" />
-    <div class="node-name">{{ nodeConfig.description }}</div>
-    <!-- {{  nodeConfig.attrData }} -->
-    <!-- <div>
-      <span v-for="(item, index) in configArr" :key="index">{{ item }}</span>
-    </div> -->
+    {{ nodeConfig.name }}
   </div>
 </template>
 
@@ -37,13 +32,11 @@ export default {
 .basic-node {
   border: 1px solid #ccc;
   display: flex;
-  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   background: #fff;
-  border-radius: 4px;
-}
-.basic-node__icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
+  border-radius: 50%;
 }
 </style>

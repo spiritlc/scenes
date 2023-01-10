@@ -1,3 +1,3 @@
-import { portsMap } from "@/modules/port";
+import portsMap from "@/modules/port/template";
 
-export type portsMapI = keyof typeof portsMap;
+export type portsKey = keyof typeof portsMap;

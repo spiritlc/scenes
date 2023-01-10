@@ -89,12 +89,16 @@ const tools: Array<graphToolsT> = [
   TOOL_DISABLED,
 ];
 
+// 控制连接桩显示/隐藏
+const showPorts = (ports: NodeListOf<SVGElement>, show: boolean) => {
+  for (let i = 0, len = ports.length; i < len; i = i + 1) {
+    ports[i].style.visibility = show ? "visible" : "hidden";
+  }
+};
 onMounted(() => {
   // 注册线
   registerEdge([BASIC_EDGE]);
   if (graph.value && dnd.value) {
-    console.log("sdf", graph.value);
-
     // 添加node点击事件
     graph.value.on("node:click", ({ view, node }) => {
       if (BasicNode.value) {
@@ -123,6 +127,21 @@ onMounted(() => {
       if (BasicNode.value) {
         BasicNode.value.classList.remove("active");
       }
+    });
+    graph.value.on("node:mouseenter", () => {
+      const container = document.getElementById("container") as Element;
+      const ports = container.querySelectorAll(
+        ".x6-port-body"
+      ) as NodeListOf<SVGElement>;
+      console.log(ports);
+      showPorts(ports, true);
+    });
+    graph.value.on("node:mouseleave", () => {
+      const container = document.getElementById("container") as Element;
+      const ports = container.querySelectorAll(
+        ".x6-port-body"
+      ) as NodeListOf<SVGElement>;
+      showPorts(ports, false);
     });
   }
 });

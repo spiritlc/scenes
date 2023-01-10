@@ -1,22 +1,14 @@
 <template>
   <div class="material-content">
-    <el-tabs v-model="activeName">
-      <el-tab-pane label="条件" name="condition">
-        <menu-item v-bind="$attrs" :menu-list="conditionList"></menu-item>
-      </el-tab-pane>
-      <el-tab-pane label="逻辑" name="logic">
-        <menu-item v-bind="$attrs" :menu-list="logicList"></menu-item>
-      </el-tab-pane>
-      <el-tab-pane label="动作" name="actuib">
-        <menu-item v-bind="$attrs" :menu-list="actionList"></menu-item>
-      </el-tab-pane>
-    </el-tabs>
+    <menu-item
+      v-bind="$attrs"
+      :menu-list="[...conditionList, ...logicList]"
+    ></menu-item>
   </div>
 </template>
 
 <script lang="ts" setup>
 // 依赖
-import { ref } from "vue";
 import MenuItem from "./MenuItem.vue";
 import useInitMaterial from "@/views/MainPage/composition/useInitMaterial";
 
@@ -24,9 +16,7 @@ import useInitMaterial from "@/views/MainPage/composition/useInitMaterial";
 const materialObj = useInitMaterial();
 const conditionList = materialObj.conditionList;
 const logicList = materialObj.logicList;
-const actionList = materialObj.actionList;
-// tabs
-const activeName = ref("condition");
+// const actionList = materialObj.actionList;
 </script>
 <style lang="scss" scoped>
 .material-content {
