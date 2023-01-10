@@ -3,13 +3,13 @@ import { Graph, Cell } from "@antv/x6";
 import {
   BASIC_OR_CONDITION_PORT,
   BASIC_OR_IN_PORT,
-  BASIC_OR_OUT_PORT,
+  // BASIC_OR_OUT_PORT,
 } from "@/modules/port/constants";
-const basicOrPortArr = [
-  BASIC_OR_CONDITION_PORT,
-  BASIC_OR_IN_PORT,
-  BASIC_OR_OUT_PORT,
-];
+// const basicOrPortArr = [
+//   BASIC_OR_CONDITION_PORT,
+//   BASIC_OR_IN_PORT,
+//   BASIC_OR_OUT_PORT,
+// ];
 
 /**
  * 并行节点 条件链接桩
