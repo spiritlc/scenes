@@ -14,10 +14,10 @@ const registerBasicEdge = function () {
 
       return Path.normalize(
         `M ${s.x} ${s.y}
-     L ${s.x} ${s.y + offset}
-     C ${v1.x} ${v1.y} ${v2.x} ${v2.y} ${e.x} ${e.y - offset}
-     L ${e.x} ${e.y}
-    `
+          L ${s.x} ${s.y + offset}
+          C ${v1.x} ${v1.y} ${v2.x} ${v2.y} ${e.x} ${e.y - offset}
+          L ${e.x} ${e.y}
+        `
       );
     },
     true

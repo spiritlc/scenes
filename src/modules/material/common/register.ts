@@ -17,7 +17,6 @@ import {
 } from "@/modules/material/constants";
 
 export const registerBasicNode = (options: Node.Properties) => {
-  console.log(options);
   register({
     shape: options.name,
     width: 200,

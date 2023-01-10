@@ -16,7 +16,8 @@ const basicGraphConfig = {
   background: false, // 背景（透明）
   panning: {
     enabled: true,
-    eventTypes: ["leftMouseDown", "mouseWheel"],
+    modifiers: "space",
+    eventTypes: ["leftMouseDown"],
   },
   mousewheel: {
     enabled: true,
@@ -51,6 +52,8 @@ const basicGraphConfig = {
     edgeAnchor: "ratio",
     anchor: "center",
     router: "normal",
+    edgeMovable: true, // 边是否可以被移动。
+    vertexDeletable: true, // 边的路径点是否可以被删除。
     validateMagnet() {
       // return magnet.getAttribute('port-group') !== 'top'
       // 限制连线配置

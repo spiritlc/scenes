@@ -31,10 +31,7 @@ export interface ComponentConfig extends ComponentPostConfig {
   attr?: {
     template: string; // 模板名称
     config: object; // 自定义配置项
-    ports: Array<any>; // 当前UI容器关联的链接桩
   };
-  // attrType?: string; // 属性模板,侧边栏和右侧属性栏映射关系
-  // shapeType: string; // 物料模板,侧边栏和拖拽生成节点映射关系
 }
 
 export interface ComponentDataI {

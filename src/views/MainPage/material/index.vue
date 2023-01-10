@@ -1,14 +1,20 @@
 <template>
   <div class="material-content">
-    <menu-item
-      v-bind="$attrs"
-      :menu-list="[...conditionList, ...logicList]"
-    ></menu-item>
+    <el-collapse v-model="activeNames" @change="changeCollapse">
+      <el-collapse-item title="条件组件" name="condition">
+        <menu-item v-bind="$attrs" :menu-list="conditionList"></menu-item>
+      </el-collapse-item>
+      <el-collapse-item title="功能组件" name="logic">
+        <menu-item v-bind="$attrs" :menu-list="logicList"></menu-item>
+      </el-collapse-item>
+      <el-collapse-item title="动作组件" name="action"> </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 
 <script lang="ts" setup>
 // 依赖
+import { ref } from "vue";
 import MenuItem from "./MenuItem.vue";
 import useInitMaterial from "@/views/MainPage/composition/useInitMaterial";
 
@@ -17,6 +23,10 @@ const materialObj = useInitMaterial();
 const conditionList = materialObj.conditionList;
 const logicList = materialObj.logicList;
 // const actionList = materialObj.actionList;
+const activeNames = ref(["condition", "action", "logic"]);
+const changeCollapse = function () {
+  console.log("world");
+};
 </script>
 <style lang="scss" scoped>
 .material-content {
@@ -42,15 +52,14 @@ const logicList = materialObj.logicList;
     border-radius: 10px;
     background: #bbb;
   }
-  ::v-deep(.el-tabs__header) {
-    padding-left: 20px;
+  ::v-deep(.el-collapse) {
+    padding: 0 20px;
   }
-  ::v-deep(.el-tabs__active-bar) {
-    background-color: $active-color;
+  ::v-deep(.el-collapse-item__header) {
+    font-size: 14px;
   }
-  ::v-deep(.el-tabs__item:hover),
-  ::v-deep(.el-tabs__item.is-active) {
-    color: $active-color;
+  ::v-deep(.el-collapse-item__content) {
+    padding-bottom: 0;
   }
 }
 </style>

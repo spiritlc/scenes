@@ -32,7 +32,7 @@ export function registerGraph({
         this: Graph,
         params: ValidateConnectionArgs
       ) {
-        return createGraphRules(config.rules || [], params)();
+        return createGraphRules(config.rules || [], params)(this);
       },
     });
   }

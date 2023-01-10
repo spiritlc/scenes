@@ -5,6 +5,7 @@ import graphRulesMap from "@/modules/graph/rules/graphRulesMap";
 import {
   CHECK_SAME_PORT,
   CHECK_PORT_TYPE,
+  CHECK_OR_PORT,
 } from "@/modules/graph/rules/constants";
 
 /**
@@ -12,12 +13,13 @@ import {
  * 如果返回 false，当鼠标放开的时候，不会连接到当前元素，否则会连接到当前元素。
  */
 const rulesArr: Array<keyof typeof graphRulesMap> = [
-  CHECK_SAME_PORT,
-  CHECK_PORT_TYPE,
+  CHECK_SAME_PORT, // 相同节点不能连接
+  CHECK_PORT_TYPE, // 连线只能从输出节点到输入节点
+  CHECK_OR_PORT, // 校验逻辑关系节点-并行节点
 ];
 export default function validateConnection(
   this: Graph,
   params: ValidateConnectionArgs
 ) {
-  return createGraphRules(rulesArr, params)();
+  return createGraphRules(rulesArr, params)(this);
 }

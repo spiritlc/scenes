@@ -32,6 +32,10 @@ export const initGraph = (options: object): Graph => {
   graph.use(
     new Selection({
       enabled: true,
+      multiple: true,
+      rubberband: true,
+      movable: true,
+      showNodeSelectionBox: true,
     })
   );
   // 开启复制粘贴功能

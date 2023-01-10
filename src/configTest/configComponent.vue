@@ -8,12 +8,18 @@
     :size="formSize"
     status-icon
   >
-    <el-form-item label="组件名称" prop="name">
+    <el-form-item label="组件名称" prop="description">
+      <el-input v-model="ruleForm.description" />
+    </el-form-item>
+    <el-form-item label="组件标识" prop="name">
       <el-input v-model="ruleForm.name" />
+    </el-form-item>
+    <el-form-item label="组件图标" prop="icon">
+      <img :src="ruleForm.icon" alt="" />
     </el-form-item>
     <el-form-item label="UI容器" prop="region">
       <el-select v-model="ruleForm.shape" placeholder="Activity zone">
-        <el-option label="基础模板" value="basicNode" />
+        <el-option label="基础模板" value="basic-node" />
         <el-option label="Zone two" value="beijing" />
       </el-select>
     </el-form-item>
@@ -55,6 +61,8 @@ const formSize = ref("default");
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
   name: "",
+  description: "",
+  icon: "https://resource.haigeek.com/download/resource/selfService/portal/img/41899b4c118d410687b0c199375cc39b.png",
   shape: "",
   region: "",
   count: "",
@@ -98,15 +106,23 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     console.log(ruleForm);
     if (valid) {
       console.log("submit!");
-      // const data = {
-      //   name: ruleForm.name,
-      //   shape: {
-      //     template: ruleForm.shape,
-      //   },
-      //   // port: {
-      //   //   templates: ruleForm.
-      //   // }
-      // };
+      const data = {
+        name: ruleForm.name, // 组件名称
+        icon: ruleForm.icon, // 组件图标
+        description: ruleForm.name, // 组件名称
+        shape: {
+          // UI容器模板
+          template: ruleForm.shape,
+        },
+        port: {
+          // 连接桩模板
+          templates: ruleForm.type,
+        },
+      };
+      const localConfig = JSON.parse(localStorage.getItem("config") || "[]");
+      localConfig.push(data);
+
+      localStorage.setItem("config", JSON.stringify(localConfig));
     } else {
       console.log("error submit!", fields);
     }
@@ -123,3 +139,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
 //   label: `${idx + 1}`,
 // }));
 </script>
+
+<style>
+img {
+  width: 24px;
+  height: 24px;
+}
+</style>

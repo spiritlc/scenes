@@ -7,5 +7,5 @@ export const ACTION_IN_PORT = "actionInPort"; // 动作输入节点
 
 export const BASIC_OR_PORT = "basicOrPort"; // 并行节点
 export const BASIC_OR_IN_PORT = "basicOrInPort"; // 并行输入节点
-export const BASIC_OR_OUT_PORT = "conditionOutPort"; // 并行输出节点
-export const BASIC_OR_CONDITION_PORT = "conditionConditionPort"; // 并行条件节点
+export const BASIC_OR_OUT_PORT = "basicOrOutPort"; // 并行输出节点
+export const BASIC_OR_CONDITION_PORT = "basicOrConditionPort"; // 并行条件节点

@@ -35,6 +35,17 @@ export default function useInitMaterial() {
   const actionList = ref<Array<ComponentDataI>>(actionData);
   const componentList = ref<Array<ComponentConfig>>([]);
 
+  const localConfig = JSON.parse(localStorage.getItem("config") || "[]");
+  if (localConfig.length) {
+    conditionList.value.push({
+      className: "自定义组件",
+      classCode: "self",
+      children: localConfig,
+    });
+  }
+
+  console.log(conditionList);
+
   // 获取物料配置,建立数据和模型关联关系
   Promise.all([
     fnGetAlltimer(), // 时间条件

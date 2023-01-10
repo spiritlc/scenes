@@ -8,7 +8,6 @@ export default function checkSamePort({
   sourcePort,
   targetPort,
 }: ValidateConnectionArgs) {
-  console.log(sourcePort);
   if (
     sourcePort &&
     targetPort &&

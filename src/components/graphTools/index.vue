@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="graph-tools__block">
     <component
+      class="graph-tools__item"
       v-bind="$attrs"
       v-for="item in tools"
       :key="item"
@@ -17,4 +18,11 @@ defineProps<{
 }>();
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.graph-tools__block {
+  display: flex;
+}
+::v-deep(.el-icon) {
+  margin: 0 3px;
+}
+</style>

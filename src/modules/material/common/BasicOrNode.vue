@@ -1,6 +1,6 @@
 <template>
   <div class="basic-node">
-    {{ nodeConfig.name }}
+    {{ nodeConfig.description }}
   </div>
 </template>
 

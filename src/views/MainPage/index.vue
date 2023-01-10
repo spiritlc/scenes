@@ -67,7 +67,7 @@ let curSelectNode = ref<Node | undefined>();
 let BasicNode = ref<Element | undefined>();
 // 通过子组件删除当前选中节点
 const delNode = () => {
-  graph && graph.removeNode(curSelectNode.value as Node);
+  graph.value && graph.value.removeNode(curSelectNode.value as Node);
   curSelectNode.value = undefined;
 };
 // 子组件数据同步给父组件
@@ -128,12 +128,12 @@ onMounted(() => {
         BasicNode.value.classList.remove("active");
       }
     });
+    // 鼠标移上显示连接桩
     graph.value.on("node:mouseenter", () => {
       const container = document.getElementById("container") as Element;
       const ports = container.querySelectorAll(
         ".x6-port-body"
       ) as NodeListOf<SVGElement>;
-      console.log(ports);
       showPorts(ports, true);
     });
     graph.value.on("node:mouseleave", () => {
@@ -143,6 +143,7 @@ onMounted(() => {
       ) as NodeListOf<SVGElement>;
       showPorts(ports, false);
     });
+    // 添加连接线点击事件
   }
 });
 </script>
