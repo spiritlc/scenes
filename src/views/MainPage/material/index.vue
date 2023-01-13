@@ -1,28 +1,29 @@
 <template>
   <div class="material-content">
     <el-collapse v-model="activeNames" @change="changeCollapse">
-      <el-collapse-item title="条件组件" name="condition">
-        <menu-item v-bind="$attrs" :menu-list="conditionList"></menu-item>
+      <el-collapse-item title="决策组件" name="condition">
+        <menu-item v-bind="$attrs" :menu-list="renderList"></menu-item>
       </el-collapse-item>
-      <el-collapse-item title="功能组件" name="logic">
+      <!-- <el-collapse-item title="逻辑组件" name="logic">
         <menu-item v-bind="$attrs" :menu-list="logicList"></menu-item>
       </el-collapse-item>
-      <el-collapse-item title="动作组件" name="action"> </el-collapse-item>
+      <el-collapse-item title="动作组件" name="action"> </el-collapse-item> -->
     </el-collapse>
   </div>
 </template>
 
 <script lang="ts" setup>
 // 依赖
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import MenuItem from "./MenuItem.vue";
 import useInitMaterial from "@/views/MainPage/composition/useInitMaterial";
+import { Graph } from "@antv/x6";
+
+const graph: Graph | undefined = inject("graph");
 
 // 配置项
-const materialObj = useInitMaterial();
-const conditionList = materialObj.conditionList;
-const logicList = materialObj.logicList;
-// const actionList = materialObj.actionList;
+const materialObj = useInitMaterial(graph);
+const renderList = materialObj.renderList;
 const activeNames = ref(["condition", "action", "logic"]);
 const changeCollapse = function () {
   console.log("world");

@@ -6,6 +6,7 @@ import BasicConditionNode from "./BasicConditionNode.vue";
 import BasicActionNode from "./BasicActionNode.vue";
 import BasicRelationNode from "./BasicRelationNode.vue";
 import BasicOrNode from "./BasicOrNode.vue";
+import BasicDescisionNode from "./BasicDescisionNode.vue";
 import { Node } from "@antv/x6";
 // 静态名称
 import {
@@ -14,6 +15,7 @@ import {
   BASIC_ACTION_NODE,
   BASIC_RELATION_NODE,
   BASIC_OR_NODE,
+  BASIC_DESCISION_NODE,
 } from "@/modules/material/constants";
 
 export const registerBasicNode = (options: Node.Properties) => {
@@ -63,6 +65,16 @@ export const registerBasicOrNode = (options: Node.Properties) => {
     ...options,
   });
 };
+// 注册决策组决策节点
+export const registerBasicDescisionNode = (options?: Node.Properties) => {
+  register({
+    shape: BASIC_DESCISION_NODE,
+    width: 200,
+    height: 50,
+    component: BasicDescisionNode,
+    ...options,
+  });
+};
 
 export default {
   [BASIC_NODE]: registerBasicNode,
@@ -70,4 +82,5 @@ export default {
   [BASIC_ACTION_NODE]: registerBasicActionNode,
   [BASIC_RELATION_NODE]: registerRelationNode,
   [BASIC_OR_NODE]: registerBasicOrNode,
+  [BASIC_DESCISION_NODE]: registerBasicDescisionNode,
 };

@@ -1,4 +1,4 @@
-import { ValidateConnectionArgs } from "@/modules/graph/types";
+import { SelfValidateConnectionArgs } from "@/modules/graph/types";
 
 /**
  * 检验节点是否为同一类
@@ -7,12 +7,8 @@ import { ValidateConnectionArgs } from "@/modules/graph/types";
 export default function checkSamePort({
   sourcePort,
   targetPort,
-}: ValidateConnectionArgs) {
-  if (
-    sourcePort &&
-    targetPort &&
-    sourcePort.split("-")[0] === targetPort.split("-")[0]
-  ) {
+}: SelfValidateConnectionArgs) {
+  if (sourcePort && targetPort && sourcePort === targetPort) {
     return false;
   }
   return true;

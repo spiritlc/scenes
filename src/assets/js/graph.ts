@@ -11,6 +11,7 @@ import {
   initKeyCut,
   initKeyUndo,
   initKeyRedo,
+  initKeyDelete,
 } from "./keyEvent";
 import { Selection } from "@antv/x6-plugin-selection"; // 获取选中
 import { Clipboard } from "@antv/x6-plugin-clipboard"; // 复制粘贴
@@ -81,6 +82,9 @@ export const initKeyboard = (graph: Graph, keyArr: Array<string>) => {
         break;
       case "redo":
         initKeyRedo(graph);
+        break;
+      case "delete":
+        initKeyDelete(graph);
         break;
       default:
         break;

@@ -1,6 +1,10 @@
 import attrs from "./attrs";
 import { v4 } from "uuid";
-import { ACTION_OUT_PORT } from "@/modules/port/constants";
+import {
+  ACTION_OUT_PORT,
+  PORT_IN_PUT,
+  ACTION_PORT,
+} from "@/modules/port/constants";
 
 export default {
   groups: {
@@ -9,5 +13,7 @@ export default {
       attrs,
     },
   },
-  items: [{ group: ACTION_OUT_PORT, id: `${ACTION_OUT_PORT}-Out-${v4()}` }],
+  items: [
+    { group: ACTION_OUT_PORT, id: `${ACTION_PORT}-${PORT_IN_PUT}-${v4()}` },
+  ],
 };

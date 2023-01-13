@@ -13,6 +13,7 @@ export const getPortConfig = ({
 }) => {
   const portConfig: Partial<PortManager.Metadata> | PortManager.PortMetadata[] =
     { groups: {}, items: [] };
+  // 存在连接桩模板，遍历获取对应的配置项
   if (portTemplates) {
     portTemplates.forEach((template) => {
       portConfig.items = Array.prototype.concat(

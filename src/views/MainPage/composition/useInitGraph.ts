@@ -19,10 +19,18 @@ export default function useInitGraph() {
       templateName: SCENE_GRAPH,
       container: document.getElementById("container") as HTMLElement,
     });
+
     // 创建dnd实例
     dnd.value = createDnd(graph.value);
     // 在当前画布上初始化键盘快捷键
-    initKeyboard(graph.value, ["copy", "paste", "cut", "undo", "redo"]);
+    initKeyboard(graph.value, [
+      "copy",
+      "paste",
+      "cut",
+      "undo",
+      "redo",
+      "delete",
+    ]);
   });
 
   return {

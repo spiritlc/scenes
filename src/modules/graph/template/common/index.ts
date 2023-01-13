@@ -16,7 +16,7 @@ const basicGraphConfig = {
   background: false, // 背景（透明）
   panning: {
     enabled: true,
-    modifiers: "space",
+    modifiers: ["alt", "meta"],
     eventTypes: ["leftMouseDown"],
   },
   mousewheel: {
@@ -27,7 +27,7 @@ const basicGraphConfig = {
     minScale: 0.5,
   },
   highlighting: {
-    magnetAdsorbed: {
+    magnetAvailable: {
       name: "stroke",
       args: {
         attrs: {

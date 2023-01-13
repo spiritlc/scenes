@@ -6,6 +6,7 @@ import {
   CHECK_SAME_PORT,
   CHECK_PORT_TYPE,
   CHECK_OR_PORT,
+  CHECK_CONDITION_PORT,
 } from "@/modules/graph/rules/constants";
 
 /**
@@ -16,10 +17,17 @@ const rulesArr: Array<keyof typeof graphRulesMap> = [
   CHECK_SAME_PORT, // 相同节点不能连接
   CHECK_PORT_TYPE, // 连线只能从输出节点到输入节点
   CHECK_OR_PORT, // 校验逻辑关系节点-并行节点
+  CHECK_CONDITION_PORT,
 ];
-export default function validateConnection(
-  this: Graph,
-  params: ValidateConnectionArgs
-) {
-  return createGraphRules(rulesArr, params)(this);
+export default function (this: Graph, params: ValidateConnectionArgs) {
+  return createGraphRules(rulesArr, params, this)();
 }
+
+// createGraphRules(rulesArr);
+
+// (
+//   this: Graph,
+//   params: ValidateConnectionArgs
+// ) {
+//   return createGraphRules(rulesArr, params)(this);
+// }

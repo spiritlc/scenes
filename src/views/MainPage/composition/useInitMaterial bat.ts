@@ -2,7 +2,7 @@
  * 处理物料数据获取，注册物料模型
  */
 // 依赖方法
-import { ref, watch } from "vue";
+import { ref } from "vue";
 // types
 import {
   ComponentConfig,
@@ -30,13 +30,8 @@ import {
   CONDITION_OUT_PORT,
   CONDITION_IN_PORT,
 } from "@/modules/port/constants";
-// 路由信息
-import { useRoute } from "vue-router";
-import { testData } from "./testData";
-import { Graph } from "@antv/x6";
 
-export default function useInitMaterial(graph: Graph | undefined) {
-  const route = useRoute();
+export default function useInitMaterial() {
   // 配置项
   const conditionList = ref<Array<ComponentDataI>>(conditionData);
   const logicList = ref<Array<ComponentDataI>>(logicData);
@@ -52,7 +47,7 @@ export default function useInitMaterial(graph: Graph | undefined) {
     });
   }
 
-  const renderList = ref<Array<ComponentDataI>>([]);
+  console.log(conditionList);
 
   // 获取物料配置,建立数据和模型关联关系
   Promise.all([
@@ -70,9 +65,9 @@ export default function useInitMaterial(graph: Graph | undefined) {
             shape: {
               template: BASIC_NODE,
             },
-            // port: {
-            //   templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
-            // },
+            port: {
+              templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
+            },
             attr: {
               template: TIME_ATTR,
             },
@@ -89,9 +84,9 @@ export default function useInitMaterial(graph: Graph | undefined) {
             shape: {
               template: BASIC_NODE,
             },
-            // port: {
-            //   templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
-            // },
+            port: {
+              templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
+            },
             attr: {
               template: WEATHER_ATTR,
             },
@@ -108,9 +103,9 @@ export default function useInitMaterial(graph: Graph | undefined) {
             shape: {
               template: BASIC_NODE,
             },
-            // port: {
-            //   templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
-            // },
+            port: {
+              templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
+            },
             attr: {
               template: FENCE_ATTR,
             },
@@ -144,40 +139,14 @@ export default function useInitMaterial(graph: Graph | undefined) {
     logicList.value.forEach((item) => {
       componentList.value.push(...item.children);
     });
-    console.log(componentList);
-    actionList.value.forEach((item) => {
-      componentList.value.push(...item.children);
-    });
+    console.log(componentList.value);
     registerComponent(componentList.value);
-
-    watch(
-      graph as Graph,
-      function (value) {
-        console.log(value);
-        if (value) {
-          // 测试demo数据处理
-          testData(value, route);
-        }
-      },
-      { immediate: true }
-    );
   });
 
-  // 当前是创建决策
-  if (route.name === "createDescisionNode") {
-    renderList.value = [...conditionList.value];
-  } else if (route.name === "createFlow") {
-    // 当前是创建场景
-    renderList.value = actionList.value;
-  } else if (route.name === "createDescisionGroup") {
-    // 当前是创建决策组
-    renderList.value = logicList.value;
-  }
   return {
-    renderList,
-    // conditionList, // 条件
-    // logicList, // 逻辑关系
-    // actionList, // 动作
-    // componentList,
+    conditionList, // 条件
+    logicList, // 逻辑关系
+    actionList, // 动作
+    componentList,
   };
 }

@@ -30,19 +30,20 @@ import {
 } from "@/assets/config/types/component";
 
 import { createNode } from "@/assets/js/material";
-import { Graph } from "@antv/x6";
 import { Dnd } from "@antv/x6-plugin-dnd";
+import { inject, ref } from "vue";
 
 const props = defineProps<{
   menuList: Array<ComponentDataI>;
-  graph: Graph;
   dnd: Dnd;
 }>();
+
+const graph = inject("graph", ref(undefined));
 // 拖拽生成节点
 const addNode = (e: MouseEvent, item: ComponentConfig) => {
-  if (props.graph && props.dnd) {
+  if (graph.value && props.dnd) {
     createNode({
-      graph: props.graph,
+      graph: graph.value,
       dnd: props.dnd,
       event: e,
       options: {

@@ -1,12 +1,16 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import HomeView from "../views/MainPage/index.vue";
+import HomeView from "../views/common/index.vue";
 import ConfigView from "../configTest/index.vue";
+
+import RulesRoutes from "@/views/descision/routes"; // 决策路由
+import FlowRoutes from "@/views/flow/routes"; // 流程路由
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
     component: HomeView,
+    children: [...RulesRoutes, ...FlowRoutes],
   },
   {
     path: "/config",

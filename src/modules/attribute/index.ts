@@ -1,9 +1,13 @@
+// 公共模板
+import commonAttrMap from "./common/register";
+
 // mainPage 属性模板和静态名称映射
 import mainPageAttrMap from "./mainPage/register";
 
 // 所有属性模板和静态名称映射
 const attrMap = {
   ...mainPageAttrMap,
+  ...commonAttrMap,
 };
 
 // 批量获取

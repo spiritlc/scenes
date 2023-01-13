@@ -2,7 +2,7 @@
   <div class="home">
     <!-- 左侧物料 -->
     <div class="menu-bar">
-      <material :graph="graph" :dnd="dnd"></material>
+      <material :dnd="dnd"></material>
     </div>
     <!-- 画布部分 -->
     <div class="canvas-card">
@@ -36,7 +36,7 @@
 </template>
 <script setup lang="ts">
 // 依赖
-import { onMounted, ref } from "vue";
+import { onMounted, ref, provide } from "vue";
 import type { Node } from "@antv/x6";
 import { graphToolsT } from "@/assets/config/types/graphTools";
 import useInitGraph from "./composition/useInitGraph";
@@ -55,12 +55,18 @@ import attributeBlock from "./attribute/index.vue";
 // 线
 import { registerEdge } from "@/modules/edge";
 import { BASIC_EDGE } from "@/modules/edge/constants";
+import { useRoute } from "vue-router";
+import testSaveData from "./utils/testSaveData";
+
+const route = useRoute();
 
 // 画布实例
 // 初始化画布
 const graphInstance = useInitGraph();
 const graph = graphInstance.graph;
 const dnd = graphInstance.dnd;
+console.log(graph.value);
+provide("graph", graph);
 
 // 当前选中节点
 let curSelectNode = ref<Node | undefined>();
@@ -72,13 +78,30 @@ const delNode = () => {
 };
 // 子组件数据同步给父组件
 const syncData = (data: object) => {
+  console.log(data);
   if (curSelectNode.value) {
-    curSelectNode.value.data.attrData = data;
+    const curSelectNodeData = curSelectNode.value.getData();
+    curSelectNode.value.setData({
+      ...curSelectNodeData,
+      attrData: data,
+    });
   }
 };
 // 保存数据
 const saveData = (data: object) => {
+  console.log("sdfs");
   console.log(data);
+  testSaveData(data, route);
+  // const graphData = JSON.parse(localStorage.getItem("graphData") || "{}");
+  // if (route.query.id) {
+  //   graphData[route.query.id] = data;
+  //   localStorage.setItem("graphData", JSON.stringify(graphData));
+
+  //   ElMessage({
+  //     message: "保存成功",
+  //     type: "success",
+  //   });
+  // }
 };
 
 // 工具栏配置项
@@ -143,6 +166,7 @@ onMounted(() => {
       ) as NodeListOf<SVGElement>;
       showPorts(ports, false);
     });
+
     // 添加连接线点击事件
   }
 });

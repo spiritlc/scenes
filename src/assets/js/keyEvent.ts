@@ -32,6 +32,7 @@ export const initKeyCut = (graph: Graph) => {
     return false;
   });
 };
+// 撤销
 export const initKeyUndo = (graph: Graph) => {
   // undo redo
   graph.bindKey(["meta+z", "ctrl+z"], () => {
@@ -48,5 +49,15 @@ export const initKeyRedo = (graph: Graph) => {
       graph.redo();
     }
     return false;
+  });
+};
+// 删除
+export const initKeyDelete = (graph: Graph) => {
+  //delete
+  graph.bindKey(["backspace", "delete"], () => {
+    const cells = graph.getSelectedCells();
+    if (cells.length) {
+      graph.removeCells(cells);
+    }
   });
 };

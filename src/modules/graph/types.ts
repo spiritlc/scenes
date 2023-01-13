@@ -27,3 +27,10 @@ export interface ValidateConnectionArgs {
   sourceMagnet?: Element | null;
   targetMagnet?: Element | null;
 }
+
+export interface SelfValidateConnectionArgs extends ValidateConnectionArgs {
+  sourcePortName: string;
+  sourcePortType: string;
+  targetPortName: string;
+  targetPortType: string;
+}

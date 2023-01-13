@@ -9,6 +9,7 @@ export default function useSyncAttrData(emit: any, attrData: object) {
   watch(
     attrData,
     () => {
+      console.log("sdfe");
       emit("syncData", attrData);
     },
     { deep: true }

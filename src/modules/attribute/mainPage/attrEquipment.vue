@@ -280,7 +280,7 @@
 <script>
 import { iotRequest } from "@/apis/api";
 // 同步父数据
-import useSyncAttrData from "@/modules/attribute/mainPage/useSyncAttrData";
+import useSyncAttrData from "@/modules/attribute/useSyncAttrData";
 
 export default {
   props: {

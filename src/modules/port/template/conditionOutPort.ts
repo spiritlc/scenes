@@ -1,6 +1,10 @@
 import attrs from "./attrs";
 import { v4 } from "uuid";
-import { CONDITION_OUT_PORT } from "@/modules/port/constants";
+import {
+  CONDITION_OUT_PORT,
+  PORT_OUT_PUT,
+  CONDITION_PORT,
+} from "@/modules/port/constants";
 
 export default {
   groups: {
@@ -10,6 +14,9 @@ export default {
     },
   },
   items: [
-    { group: CONDITION_OUT_PORT, id: `${CONDITION_OUT_PORT}-Out-${v4()}` },
+    {
+      group: CONDITION_OUT_PORT,
+      id: `${CONDITION_PORT}-${PORT_OUT_PUT}-${v4()}`,
+    },
   ],
 };

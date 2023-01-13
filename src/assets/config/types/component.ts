@@ -30,7 +30,7 @@ export interface ComponentConfig extends ComponentPostConfig {
   };
   attr?: {
     template: string; // 模板名称
-    config: object; // 自定义配置项
+    config?: object; // 自定义配置项
   };
 }
 
