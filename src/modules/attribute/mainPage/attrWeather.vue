@@ -110,6 +110,8 @@
 
 <script>
 import { iotRequest } from "@/apis/api";
+// 同步父数据
+import useSyncAttrData from "@/modules/attribute/useSyncAttrData";
 export default {
   props: {
     singData: {
@@ -239,6 +241,7 @@ export default {
   mounted() {
     this.$refs.diffForm.clearValidate();
     this.getDeivceCommand();
+    useSyncAttrData(this.$emit, this.ruleForm); // 同步数据
   },
   methods: {
     // 获取设备命令数据
@@ -289,8 +292,11 @@ export default {
     handleDeviceCommand() {
       this.$refs.diffForm.clearValidate("deviceParam");
       this.$refs.diffForm.clearValidate("deviceInputParam");
-      this.$set(this.ruleForm, "deviceInputParam", "");
-      this.$set(this.ruleForm, "deviceParam", "");
+      this.ruleForm.deviceInputParam = "";
+      this.ruleForm.deviceParam = "";
+
+      // this.$set(this.ruleForm, "deviceInputParam", "");
+      // this.$set(this.ruleForm, "deviceParam", "");
     },
     // 失焦赋值
     handleBlur(e) {

@@ -12,7 +12,7 @@
         >
           <el-menu-item index="flow-list">
             <el-icon><icon-menu /></el-icon>
-            <span>场景列表</span>
+            <span>场景流程</span>
           </el-menu-item>
           <el-menu-item index="descision-group-list">
             <el-icon><document /></el-icon>

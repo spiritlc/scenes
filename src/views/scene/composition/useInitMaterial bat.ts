@@ -2,7 +2,7 @@
  * 处理物料数据获取，注册物料模型
  */
 // 依赖方法
-import { ref, watch } from "vue";
+import { ref } from "vue";
 // types
 import {
   ComponentConfig,
@@ -24,32 +24,20 @@ import {
   DELAY_ATTR_ACTION,
 } from "@/modules/attribute/constants";
 // 配置项
-import {
-  conditionData,
-  logicData,
-  actionData,
-  descisionGroup,
-} from "@/components/config";
+import { conditionData, logicData, actionData } from "@/components/config";
 import registerComponent from "@/modules/index";
 import {
   CONDITION_OUT_PORT,
   CONDITION_IN_PORT,
 } from "@/modules/port/constants";
-// 路由信息
-import { useRoute } from "vue-router";
-import { testData } from "./testData";
-import { Graph } from "@antv/x6";
 
-export default function useInitMaterial(graph: Graph | undefined) {
-  const route = useRoute();
+export default function useInitMaterial() {
   // 配置项
-  const conditionList = ref<Array<ComponentDataI>>(conditionData); // 决策点
-  const logicList = ref<Array<ComponentDataI>>(logicData); // 逻辑节点
-  const actionList = ref<Array<ComponentDataI>>(actionData); // 行为列表
-  const descisionGroupList = ref<Array<ComponentDataI>>(descisionGroup); // 决策组
+  const conditionList = ref<Array<ComponentDataI>>(conditionData);
+  const logicList = ref<Array<ComponentDataI>>(logicData);
+  const actionList = ref<Array<ComponentDataI>>(actionData);
   const componentList = ref<Array<ComponentConfig>>([]);
 
-  // 获取自定义组件
   const localConfig = JSON.parse(localStorage.getItem("config") || "[]");
   if (localConfig.length) {
     conditionList.value.push({
@@ -59,7 +47,7 @@ export default function useInitMaterial(graph: Graph | undefined) {
     });
   }
 
-  const renderList = ref<Array<ComponentDataI>>([]);
+  console.log(conditionList);
 
   // 获取物料配置,建立数据和模型关联关系
   Promise.all([
@@ -77,9 +65,9 @@ export default function useInitMaterial(graph: Graph | undefined) {
             shape: {
               template: BASIC_NODE,
             },
-            // port: {
-            //   templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
-            // },
+            port: {
+              templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
+            },
             attr: {
               template: TIME_ATTR,
             },
@@ -96,9 +84,9 @@ export default function useInitMaterial(graph: Graph | undefined) {
             shape: {
               template: BASIC_NODE,
             },
-            // port: {
-            //   templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
-            // },
+            port: {
+              templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
+            },
             attr: {
               template: WEATHER_ATTR,
             },
@@ -115,9 +103,9 @@ export default function useInitMaterial(graph: Graph | undefined) {
             shape: {
               template: BASIC_NODE,
             },
-            // port: {
-            //   templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
-            // },
+            port: {
+              templates: [CONDITION_OUT_PORT, CONDITION_IN_PORT],
+            },
             attr: {
               template: FENCE_ATTR,
             },
@@ -145,39 +133,20 @@ export default function useInitMaterial(graph: Graph | undefined) {
       );
     }
 
-    [
-      ...conditionList.value,
-      ...logicList.value,
-      ...actionList.value,
-      ...descisionGroupList.value,
-    ].forEach((item) => {
+    conditionList.value.forEach((item) => {
       componentList.value.push(...item.children);
     });
+    logicList.value.forEach((item) => {
+      componentList.value.push(...item.children);
+    });
+    console.log(componentList.value);
     registerComponent(componentList.value);
-
-    watch(
-      graph as Graph,
-      function (value) {
-        if (value) {
-          // 测试demo数据处理
-          testData(value, route);
-        }
-      },
-      { immediate: true }
-    );
   });
 
-  // 当前是创建决策
-  if (route.name === "createDescisionNode") {
-    renderList.value = [...conditionList.value]; // 展示决策点组件
-    // 当前是创建流程
-  } else if (route.name === "createFlow") {
-    renderList.value = [...actionList.value, ...descisionGroupList.value]; // 展示行为组件和决策组组件
-    // 当前是创建决策组
-  } else if (route.name === "createDescisionGroup") {
-    renderList.value = logicList.value;
-  }
   return {
-    renderList,
+    conditionList, // 条件
+    logicList, // 逻辑关系
+    actionList, // 动作
+    componentList,
   };
 }

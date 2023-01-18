@@ -1,7 +1,13 @@
 <template>
   <div class="basic-node">
-    <img class="basic-node__icon" :src="nodeConfig.icon" alt="" />
-    <div class="node-name">{{ nodeConfig.description }}</div>
+    <div class="basic-node__desc">
+      <img class="basic-node__icon" :src="nodeConfig.icon" alt="" />
+      <div class="node-name">{{ nodeConfig.description }}</div>
+    </div>
+    <!-- <div class="operation" v-if="attrData.operationSign">
+      {{ attrData.operationSign === "greaterThan" ? "高于" : "低于" }}
+      {{ attrData.value.desc }}
+    </div> -->
   </div>
 </template>
 
@@ -9,49 +15,35 @@
 import { inject, ref, onMounted } from "vue";
 import { Node } from "@antv/x6";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const getNode: (() => Node) | undefined = inject("getNode");
 
 const node = ref<Node>();
 const nodeConfig = ref<any>({ attrData: [] });
+const attrData = ref<any>({});
 
 onMounted(() => {
   if (getNode) {
     node.value = getNode();
     nodeConfig.value = node.value.data;
+    attrData.value = nodeConfig.value.attrData || {};
+    console.log(nodeConfig.value);
+    node.value.on("change:data", ({ current }) => {
+      nodeConfig.value = current;
+      attrData.value = nodeConfig.value.attrData || {};
+    });
   }
 });
-
-// export default {
-//   data() {
-//     return {
-//       node: null,
-//       nodeConfig: {},
-//     };
-//   },
-//   inject: ["getNode"],
-//   mounted() {
-//     const node = this.getNode();
-//     this.node = node;
-//     this.nodeConfig = node.data;
-//   },
-//   computed: {
-//     configArr() {
-//       return Object.keys(this.nodeConfig.attrData).map(
-//         (key) => this.nodeConfig.attrData[key]
-//       );
-//     },
-//   },
-// };
 </script>
 
 <style lang="scss" scoped>
 .basic-node {
   border: 1px solid #ccc;
-  display: flex;
   padding: 10px;
   background: #fff;
   border-radius: 4px;
+}
+.basic-node__desc {
+  display: flex;
 }
 .basic-node__icon {
   width: 20px;

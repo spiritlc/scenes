@@ -2,7 +2,7 @@
   <div class="home">
     <!-- 左侧物料 -->
     <div class="menu-bar">
-      <material :dnd="dnd"></material>
+      <material :graph="graph" :dnd="dnd"></material>
     </div>
     <!-- 画布部分 -->
     <div class="canvas-card">
@@ -10,10 +10,12 @@
         <graph-tools
           :tools="tools"
           :graph="graph"
+          :dnd="dnd"
           @save-data="saveData"
         ></graph-tools>
       </header>
       <div id="container"></div>
+      <TeleportContainer />
     </div>
     <!-- 右侧属性栏 -->
     <div class="attrs-bar" v-show="curSelectNode">
@@ -36,12 +38,12 @@
 </template>
 <script setup lang="ts">
 // 依赖
-import { onMounted, ref, provide } from "vue";
+import { onMounted, ref } from "vue";
 import type { Node, Cell, Graph } from "@antv/x6";
 import { graphToolsT } from "@/assets/config/types/graphTools";
 import useInitGraph from "./composition/useInitGraph";
 // 自定义物料渲染
-import Material from "./material/index.vue";
+import Material from "./materialComponent.vue";
 // 工具栏
 import GraphTools from "@/components/graphTools/index.vue";
 import {
@@ -55,16 +57,16 @@ import attributeBlock from "./attribute/index.vue";
 import { useRoute } from "vue-router";
 import testSaveData from "./utils/testSaveData";
 import { BASIC_DESCISION_GROUP } from "@/modules/material/constants";
+import { getTeleport } from "@antv/x6-vue-shape";
 
 const route = useRoute();
+const TeleportContainer = getTeleport();
 
 // 画布实例
 // 初始化画布
 const graphInstance = useInitGraph();
 const graph = graphInstance.graph;
 const dnd = graphInstance.dnd;
-provide("graph", graph); // 向子组件注入画布实例
-
 // 当前选中节点
 let curSelectNode = ref<Node | undefined>();
 let BasicNode = ref<Element | undefined>();

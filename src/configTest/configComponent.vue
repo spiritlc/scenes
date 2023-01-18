@@ -44,6 +44,8 @@
         </el-checkbox>
       </el-checkbox-group>
     </el-form-item>
+    <p style="font-size: 16px; margin: -5px 0 15px">属性配置</p>
+
     <el-form-item>
       <el-button type="primary" @click="submitForm(ruleFormRef)">
         创建

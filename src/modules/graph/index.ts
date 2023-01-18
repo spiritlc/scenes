@@ -11,6 +11,7 @@ import { initGraphParamsI } from "./types";
 import graphMap from "./template/graphMap";
 // 基础配置项
 import commonConfig from "@/modules/graph/template/common";
+// import { initKeyboard } from "@/assets/js/graph";
 
 // 注册画布方法
 export function registerGraph({

@@ -67,3 +67,11 @@ $default-color: #1b1c21; // 默认颜色
 .x6-widget-selection-box {
   opacity: 0;
 }
+.x6-edge:hover path:nth-child(2){
+  stroke: #1890ff;
+  stroke-width: 1px;
+}
+.x6-edge-selected path:nth-child(2){
+  stroke: #1890ff;
+  stroke-width: 1.5px !important;
+}

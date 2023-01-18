@@ -1,9 +1,6 @@
 <template>
   <div class="basic-node">
-    <img class="basic-node__icon" :src="nodeConfig.icon" alt="" />
-    <div class="node-name">
-      {{ attrData.descision || nodeConfig.description }}
-    </div>
+    <div class="node-name">{{ nodeConfig.description }}</div>
   </div>
 </template>
 
@@ -12,24 +9,14 @@ import { inject, ref, onMounted } from "vue";
 import { Node } from "@antv/x6";
 
 const getNode: (() => Node) | undefined = inject("getNode");
-
 const node = ref<Node>();
 const nodeConfig = ref<any>({ attrData: [] });
-const attrData = ref<any>({});
-
-// computed()
-// const nodeConfig = computed(() => {
-//   return (node.value && node.value.data) || {};
-// });
-
 onMounted(() => {
   if (getNode) {
     node.value = getNode();
     nodeConfig.value = node.value.data;
-    attrData.value = nodeConfig.value.attrData || {};
     node.value.on("change:data", ({ current }) => {
       nodeConfig.value = current;
-      attrData.value = nodeConfig.value.attrData || {};
     });
   }
 });
@@ -39,13 +26,11 @@ onMounted(() => {
 .basic-node {
   border: 1px solid #ccc;
   display: flex;
-  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   background: #fff;
-  border-radius: 4px;
-}
-.basic-node__icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
+  border-radius: 50%;
 }
 </style>
