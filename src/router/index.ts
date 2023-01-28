@@ -6,6 +6,7 @@ import sceneView from "@/views/scene/index.vue";
 
 import RulesRoutes from "@/views/descision/routes"; // 决策路由
 import FlowRoutes from "@/views/flow/routes"; // 流程路由
+import LogicFlowRoutes from "@/views/LogicFlow/routes"; // bpmn路由
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,6 +20,7 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView,
     children: [...RulesRoutes, ...FlowRoutes],
   },
+  ...LogicFlowRoutes,
   {
     path: "/config",
     name: "config",

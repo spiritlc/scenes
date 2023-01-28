@@ -6,6 +6,10 @@
 $font-color: #929292; // 灰色字体颜色
 $active-color: #2468f2;
 $default-color: #1b1c21; // 默认颜色
+*{
+  padding: 0;
+  margin: 0;
+}
 
 
 // 重写elementui样式
