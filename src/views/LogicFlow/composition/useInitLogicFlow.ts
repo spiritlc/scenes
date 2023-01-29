@@ -18,14 +18,14 @@ export default function useInitLogicFlow() {
     LogicFlow.use(Snapshot);
     LogicFlow.use(Control);
     LogicFlow.use(Menu);
-    if (route.name !== "logicFlowDetail") {
-      LogicFlow.use(SelectionSelect);
-    }
+    // if (route.name !== "logicFlowDetail") {
+    LogicFlow.use(SelectionSelect);
+    // }
     LogicFlow.use(HBpmn);
     lf.value = new LogicFlow({
       container: document.querySelector("#logic-flow") as HTMLElement,
       grid: true,
-      stopMoveGraph: route.name !== "logicFlowDetail",
+      // stopMoveGraph: route.name !== "logicFlowDetail",
       keyboard: {
         enabled: true,
       },
