@@ -60,9 +60,14 @@ const eventData = [
 // 网关数据
 const gatewayData = [
   {
-    name: "排他网关",
+    name: "互斥网关",
     type: "h-bpmn:exclusiveGateway",
     className: "pattern-condition",
+  },
+  {
+    name: "并行网关",
+    type: "h-bpmn:parallelGateway",
+    className: "pattern-parallel",
   },
 ];
 // 任务数据
@@ -76,6 +81,16 @@ const taskData = [
     name: "系统任务",
     type: "h-bpmn:serviceTask",
     className: "pattern-service",
+  },
+  {
+    name: "接收任务",
+    type: "h-bpmn:receiveTask",
+    className: "pattern-receive",
+  },
+  {
+    name: "调用活动",
+    type: "h-bpmn:callActivity",
+    className: "pattern-call",
   },
 ];
 const menuData = [
@@ -140,12 +155,6 @@ function addNode(type: string) {
   display: flex;
   flex-wrap: wrap;
 }
-.pattern-ins {
-  width: 36px;
-  height: 36px;
-  opacity: 0.99;
-  cursor: grab;
-}
 
 .pattern-selection {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAABGdBTUEAALGPC/xhBQAAAOVJREFUOBGtVMENwzAIjKP++2026ETdpv10iy7WFbqFyyW6GBywLCv5gI+Dw2Bluj1znuSjhb99Gkn6QILDY2imo60p8nsnc9bEo3+QJ+AKHfMdZHnl78wyTnyHZD53Zzx73MRSgYvnqgCUHj6gwdck7Zsp1VOrz0Uz8NbKunzAW+Gu4fYW28bUYutYlzSa7B84Fh7d1kjLwhcSdYAYrdkMQVpsBr5XgDGuXwQfQr0y9zwLda+DUYXLaGKdd2ZTtvbolaO87pdo24hP7ov16N0zArH1ur3iwJpXxm+v7oAJNR4JEP8DoAuSFEkYH7cAAAAASUVORK5CYII=)
@@ -165,10 +174,30 @@ function addNode(type: string) {
     center center no-repeat;
 }
 .pattern-service {
-  background: url(../../assets/images/bpmn/service.svg) center center no-repeat;
+  background: url(../../assets/images/bpmn/service.png) center center no-repeat;
+  background-size: 60%;
 }
 .pattern-condition {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAAHeEJUAAAAABGdBTUEAALGPC/xhBQAAAvVJREFUOBGNVEFrE0EU/mY3bQoiFlOkaUJrQUQoWMGePLX24EH0IIoHKQiCV0G8iE1covgLiqA/QTzVm1JPogc9tIJYFaQtlhQxqYjSpunu+L7JvmUTU3AgmTfvffPNN++9WSA1DO182f6xwILzD5btfAoQmwL5KJEwiQyVbSVZ0IgRyV6PTpIJ81E5ZvqfHQR0HUOBHW4L5Et2kQ6Zf7iAOhTFAA8s0pEP7AXO1uAA52SbqGk6h/6J45LaLhO64ByfcUzM39V7ZiAdS2yCePPEIQYvTUHqM/n7dgQNfBKWPjpF4ISk8q3J4nB11qw6X8l+FsF3EhlkEMfrjIer3wJTLwS2aCNcj4DbGxXTw00JmAuO+Ni6bBxVUCvS5d9aa04+so4pHW5jLTywuXAL7jJ+D06sl82Sgl2JuVBQn498zkc2bGKxULHjCnSMadBKYDYYHAtsby1EQ5lNGrQd4Y3v4Zo0XdGEmDno46yCM9Tk+RiJmUYHS/aXHPNTcjxcbTFna000PFJHIVZ5lFRqRpJWk9/+QtlOUYJj9HG5pVFEU7zqIYDVsw2s+AJaD8wTd2umgSCCyUxgGsS1Y6TBwXQQTFuZaHcd8gAGioE90hlsY+wMcs30RduYtxanjMGal8H5dMW67dmT1JFtYUEe8LiQLRsPZ6IIc7A4J5tqco3T0pnv/4u0kyzrYUq7gASuEyI8VXKvB9Odytv6jS/PNaZBln0nioJG/AVQRZvApOdhjj3Jt8QC8Im09SafwdBdvIpztpxWxpeKCC+EsFdS8DCyuCn2munFpL7ctHKp+Xc5cMybeIyMAN33SPL3ZR9QV1XVwLyzHm6Iv0/yeUuUb7PPlZC4D4HZkeu6dpF4v9j9MreGtMbxMMRLIcjJic9yHi7WQ3yVKzZVWUr5UrViJvn1FfUlwe/KYVfYyWRLSGNu16hR01U9IacajXPei0wx/5BqgInvJN+MMNtNme7ReU9SBbgntovn0kKHpFg7UogZvaZiOue/q1SBo9ktHzQAAAAASUVORK5CYII=)
     center center no-repeat;
+}
+.pattern-parallel {
+  background: url(../../assets/images/bpmn/plus.png) center center no-repeat;
+  background-size: 60%;
+}
+.pattern-receive {
+  background: url(../../assets/images/bpmn/receive.png) center center no-repeat;
+  background-size: 80%;
+}
+.pattern-call {
+  background: url(../../assets/images/bpmn/call.png) center center no-repeat;
+  background-size: 70%;
+}
+
+.pattern-ins {
+  width: 36px;
+  height: 36px;
+  opacity: 0.99;
+  cursor: grab;
 }
 </style>

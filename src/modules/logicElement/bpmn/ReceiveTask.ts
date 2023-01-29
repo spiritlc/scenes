@@ -1,6 +1,6 @@
 // UserTaskNode.js
 import { RectNode, RectNodeModel, h } from "@logicflow/core";
-import { HBPMN_USER_TASK } from "./constants";
+import { HBPMN_RECEIVE_TASK } from "./constants";
 
 class UserTaskModel extends RectNodeModel {
   initNodeData(data: any) {
@@ -31,7 +31,7 @@ class UserTaskView extends RectNode {
       [
         h("path", {
           fill: style.stroke,
-          d: "M655.807326 287.35973m-223.989415 0a218.879 218.879 0 1 0 447.978829 0 218.879 218.879 0 1 0-447.978829 0ZM1039.955839 895.482975c-0.490184-212.177424-172.287821-384.030443-384.148513-384.030443-211.862739 0-383.660376 171.85302-384.15056 384.030443L1039.955839 895.482975z",
+          d: "M780.8 341.333333H243.2l268.8 149.333334v85.333333L213.333333 409.6V682.666667h597.333334V409.6l-298.666667 166.4v-85.333333L780.8 341.333333zM896 256v512H128V256h768z",
         }),
       ]
     );
@@ -59,7 +59,7 @@ class UserTaskView extends RectNode {
 }
 
 export default {
-  type: HBPMN_USER_TASK,
+  type: HBPMN_RECEIVE_TASK,
   view: UserTaskView,
   model: UserTaskModel,
 };

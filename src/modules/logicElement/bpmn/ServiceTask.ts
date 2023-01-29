@@ -7,6 +7,7 @@ class UserTaskModel extends RectNodeModel {
     super.initNodeData(data);
     this.width = 200;
     this.height = 100;
+    this.radius = 5;
   }
   getNodeStyle() {
     const style = super.getNodeStyle();

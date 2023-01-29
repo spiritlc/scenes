@@ -16,8 +16,8 @@ export default [
     },
   },
   {
-    path: "/flow-detail",
-    name: "flowDetail",
+    path: "/logic-flow-detail",
+    name: "logicFlowDetail",
     component: logicFlowBasic,
     meta: {
       hideMenu: true,

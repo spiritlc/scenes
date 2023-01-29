@@ -1,15 +1,19 @@
 <template>
   <div class="home">
-    <bpmnMenu :lf="lf"></bpmnMenu>
+    <bpmnMenu v-if="route.name !== 'logicFlowDetail'" :lf="lf"></bpmnMenu>
     <div class="logic-block">
       <div id="logic-flow" ref="flow"></div>
     </div>
+    <!-- 属性配置 -->
   </div>
 </template>
 
 <script setup lang="ts">
 import bpmnMenu from "./bpmnMenu.vue";
 import useInitLogicFlow from "./composition/useInitLogicFlow";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 // 初始化画布
 const graphInstance = useInitLogicFlow();

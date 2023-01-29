@@ -5,11 +5,11 @@
       <el-button @click="goToCreateScene">新建场景</el-button>
     </div>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="name" label="场景名称" width="180" />
-      <el-table-column prop="createTime" label="创建时间" width="180" />
-      <el-table-column prop="modifyTime" label="修改时间" width="180" />
-      <el-table-column prop="zip" label="Zip" width="180" />
-      <el-table-column fixed="right" label="操作" width="180">
+      <el-table-column prop="name" label="场景名称" />
+      <el-table-column prop="createTime" label="创建时间" />
+      <el-table-column prop="modifyTime" label="修改时间" />
+      <el-table-column prop="creater" label="创建人" />
+      <el-table-column fixed="right" label="操作">
         <template #default="scope">
           <el-button
             link
@@ -38,7 +38,12 @@ import { ref } from "vue";
 
 const router = useRouter();
 
-const tableData = ref(JSON.parse(localStorage.getItem("logicList") || "[]"));
+const tableData = ref(
+  JSON.parse(
+    localStorage.getItem("logicList") || '[{"id":0,"name":"汽车生产"}]'
+  )
+);
+localStorage.setItem("logicList", JSON.stringify(tableData.value));
 
 type sceneDataType = { id: number; name: string };
 // 事件
@@ -63,7 +68,7 @@ const editScene = (item: sceneDataType) => {
 };
 const handleClick = (item: { id: number; name: string }) => {
   router.push({
-    name: "rulesDetail",
+    name: "logicFlowDetail",
     query: { id: item.id },
   });
 };

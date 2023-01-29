@@ -5,38 +5,47 @@ import "@logicflow/core/dist/style/index.css";
 import "@logicflow/extension/lib/style/index.css";
 import { Snapshot, Control, Menu, SelectionSelect } from "@logicflow/extension";
 import HBpmn from "@/modules/logicElement/bpmn";
+import { useRoute } from "vue-router";
+import carData from "@/assets/data";
+import { ElMessage } from "element-plus";
 
 export default function useInitLogicFlow() {
   const lf = ref<LogicFlow | undefined>(undefined);
+  const route = useRoute();
+  const id = route.query.id as string;
+  console.log(route);
   onMounted(() => {
     LogicFlow.use(Snapshot);
     LogicFlow.use(Control);
     LogicFlow.use(Menu);
-    LogicFlow.use(SelectionSelect);
+    if (route.name !== "logicFlowDetail") {
+      LogicFlow.use(SelectionSelect);
+    }
     LogicFlow.use(HBpmn);
     lf.value = new LogicFlow({
       container: document.querySelector("#logic-flow") as HTMLElement,
       grid: true,
-      stopMoveGraph: true,
+      stopMoveGraph: route.name !== "logicFlowDetail",
       keyboard: {
         enabled: true,
       },
+      isSilentMode: route.name === "logicFlowDetail",
       style: {
         rect: {
           radius: 5,
-          stroke: "rgb(24, 125, 255)",
+          stroke: "#187DFF",
         },
         circle: {
           r: 18,
-          stroke: "rgb(24, 125, 255)",
+          stroke: "#187DFF",
         },
         polygon: {
-          stroke: "rgb(24, 125, 255)",
+          stroke: "#187DFF",
         },
         polyline: {
-          stroke: "rgb(24, 125, 255)",
-          hoverStroke: "rgb(24, 125, 255)",
-          selectedStroke: "rgb(24, 125, 255)",
+          stroke: "#187DFF",
+          hoverStroke: "#187DFF",
+          selectedStroke: "#187DFF",
         },
         edgeText: {
           background: {
@@ -55,9 +64,13 @@ export default function useInitLogicFlow() {
       text: "保存",
       onClick: (lf: LogicFlow) => {
         const data = lf.getGraphData();
-        // const lfData = JSON.parse(localStorage.getItem("logicData") || "[]");
-
-        console.log(JSON.stringify(data));
+        const lfData = JSON.parse(localStorage.getItem("logicData") || "{}");
+        lfData[id] = data;
+        localStorage.setItem("logicData", JSON.stringify(lfData));
+        ElMessage({
+          message: "保存成功",
+          type: "success",
+        });
       },
     });
 
@@ -101,7 +114,16 @@ export default function useInitLogicFlow() {
         },
       ],
     });
-    lf.value.render();
+
+    const lfData = JSON.parse(
+      localStorage.getItem("logicData") || JSON.stringify(carData)
+    );
+    if (lfData[id]) {
+      lf.value.render(lfData[id]);
+      localStorage.setItem("logicData", JSON.stringify(lfData));
+    } else {
+      lf.value.render();
+    }
   });
   return {
     lf,
