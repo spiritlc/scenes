@@ -6,7 +6,7 @@ import { CircleNode, CircleNodeModel, h } from "@logicflow/core";
 class StartEventModel extends CircleNodeModel {
   initNodeData(data: any) {
     super.initNodeData(data);
-    this.text.value = this.text.value || "定时事件";
+    this.text.value = this.text.value || "时间事件";
     this.text.editable = true;
     this.text.x = this.x;
     this.text.y = this.y + this.r;

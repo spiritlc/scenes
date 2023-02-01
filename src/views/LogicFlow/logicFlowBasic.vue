@@ -2,9 +2,11 @@
   <div class="home">
     <bpmnMenu v-if="route.name !== 'logicFlowDetail'" :lf="lf"></bpmnMenu>
     <div class="logic-block">
+      <logic-flow-tools :lf="lf"></logic-flow-tools>
       <div id="logic-flow" ref="flow"></div>
     </div>
     <!-- 属性配置 -->
+    <logic-flow-attr :activeCell="activeCell"></logic-flow-attr>
   </div>
 </template>
 
@@ -12,25 +14,30 @@
 import bpmnMenu from "./bpmnMenu.vue";
 import useInitLogicFlow from "./composition/useInitLogicFlow";
 import { useRoute } from "vue-router";
+import logicFlowAttr from "./logicFlowAttr.vue";
+import logicFlowTools from "@/components/logicTools/index.vue";
 
 const route = useRoute();
 
 // 初始化画布
 const graphInstance = useInitLogicFlow();
 const lf = graphInstance.lf;
+const activeCell = graphInstance.activeCell;
 </script>
 
 <style lang="scss" scoped>
 .home {
   width: 100%;
-  height: 97vh;
+  height: 100vh;
   display: flex;
 }
 .logic-block {
   width: 0;
   flex: 1;
-  height: 100%;
+  display: flex;
   box-sizing: border-box;
+  overflow: hidden;
+  flex-direction: column;
 }
 #logic-flow {
   width: 100%;

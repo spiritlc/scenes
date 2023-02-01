@@ -42,7 +42,7 @@ watch(lf, () => {
   }
 });
 
-const activeCol = ["events", "gateways", "task"];
+const activeCol = ["control", "events", "gateways", "task", "logic"];
 
 // 事件数据
 const eventData = [
@@ -51,9 +51,14 @@ const eventData = [
     type: "h-bpmn:startEvent",
     className: "pattern-start",
   },
+  // {
+  //   name: "时间开始",
+  //   type: "h-bpmn:timerIntermediateEvent",
+  //   className: "pattern-start",
+  // },
   {
-    name: "定时事件",
-    type: "h-bpmn:timerStartEvent",
+    name: "时间事件",
+    type: "h-bpmn:timerIntermediateEvent",
     className: "pattern-time",
   },
   {
@@ -63,40 +68,55 @@ const eventData = [
   },
 ];
 // 网关数据
-const gatewayData = [
-  {
-    name: "互斥网关",
-    type: "h-bpmn:exclusiveGateway",
-    className: "pattern-exclusive",
-  },
-  {
-    name: "并行网关",
-    type: "h-bpmn:parallelGateway",
-    className: "pattern-parallel",
-  },
-  {
-    name: "复杂网关",
-    type: "h-bpmn:complexGateway",
-    className: "pattern-complex",
-  },
-];
+// const gatewayData = [
+//   {
+//     name: "互斥网关",
+//     type: "h-bpmn:exclusiveGateway",
+//     className: "pattern-exclusive",
+//   },
+//   {
+//     name: "并行网关",
+//     type: "h-bpmn:parallelGateway",
+//     className: "pattern-parallel",
+//   },
+//   {
+//     name: "复杂网关",
+//     type: "h-bpmn:complexGateway",
+//     className: "pattern-complex",
+//   },
+// ];
 // 任务数据
 const taskData = [
   {
-    name: "人工任务",
+    name: "用户任务",
     type: "h-bpmn:userTask",
     className: "pattern-user",
   },
+  // {
+  //   name: "系统任务",
+  //   type: "h-bpmn:serviceTask",
+  //   className: "pattern-service",
+  // },
   {
-    name: "系统任务",
+    name: "设备任务",
+    type: "h-bpmn:equipmentTask",
+    className: "pattern-equipment",
+  },
+  {
+    name: "服务任务",
     type: "h-bpmn:serviceTask",
     className: "pattern-service",
   },
-  {
-    name: "接收任务",
-    type: "h-bpmn:receiveTask",
-    className: "pattern-receive",
-  },
+  // {
+  //   name: "接收任务",
+  //   type: "h-bpmn:receiveTask",
+  //   className: "pattern-receive",
+  // },
+  // {
+  //   name: "接收任务",
+  //   type: "h-bpmn:receiveTask",
+  //   className: "pattern-receive",
+  // },
   {
     name: "调用活动",
     type: "h-bpmn:callActivity",
@@ -105,24 +125,106 @@ const taskData = [
 ];
 const menuData = [
   {
+    id: "control",
+    title: "工具",
+    children: [
+      {
+        name: "选择",
+        type: "selection",
+        className: "pattern-selection",
+      },
+    ],
+  },
+  {
     id: "events",
     title: "事件",
     children: eventData,
-  },
-  {
-    id: "gateways",
-    title: "网关",
-    children: gatewayData,
   },
   {
     id: "task",
     title: "任务",
     children: taskData,
   },
+  {
+    id: "logic",
+    title: "逻辑",
+    children: [
+      {
+        name: "逻辑或",
+        type: "h-bpmn:complexGatewayOr",
+        className: "pattern-or",
+      },
+      {
+        name: "逻辑且",
+        type: "h-bpmn:complexGatewayAnd",
+        className: "pattern-and",
+      },
+      {
+        name: "复杂逻辑",
+        type: "h-bpmn:complexGateway",
+        className: "pattern-complex",
+      },
+      {
+        name: "条件判断",
+        type: "h-bpmn:exclusiveGateway",
+        className: "pattern-exclusive",
+      },
+    ],
+  },
 ];
+// const menuData = [
+//   {
+//     id: "control",
+//     title: "工具",
+//     children: [
+//       {
+//         name: "选择",
+//         type: "selection",
+//         className: "pattern-selection",
+//       },
+//     ],
+//   },
+//   {
+//     id: "events",
+//     title: "事件",
+//     children: eventData,
+//   },
+//   {
+//     id: "gateways",
+//     title: "网关",
+//     children: gatewayData,
+//   },
+//   {
+//     id: "task",
+//     title: "任务",
+//     children: taskData,
+//   },
+//   {
+//     id: "logic",
+//     title: "逻辑",
+//     children: [
+//       {
+//         name: "逻辑或",
+//         type: "h-bpmn:complexGatewayOr",
+//         className: "pattern-or",
+//       },
+//       {
+//         name: "逻辑且",
+//         type: "h-bpmn:complexGatewayAnd",
+//         className: "pattern-and",
+//       },
+//     ],
+//   },
+// ];
 
 // 事件
 function addNode(type: string) {
+  if (type === "selection") {
+    lf.value.updateEditConfig({
+      stopMoveGraph: true,
+    });
+    return;
+  }
   lf &&
     lf.value.dnd.startDrag({
       type,
@@ -130,17 +232,17 @@ function addNode(type: string) {
 }
 // function openSelection() {
 //   console.log(props.lf);
-//   lf.value.updateEditConfig({
-//     stopMoveGraph: true,
-//   });
+
 // }
 </script>
 
 <style lang="scss" scoped>
 .pattern {
   position: absolute;
-  left: 10px;
-  top: 10px;
+  left: 0;
+  top: 0;
+  height: 100%;
+  overflow: auto;
   width: 200px;
   display: flex;
   flex-direction: column;
@@ -187,6 +289,11 @@ function addNode(type: string) {
   background: url(../../assets/images/bpmn/service.png) center center no-repeat;
   background-size: 60%;
 }
+.pattern-equipment {
+  background: url(../../assets/images/bpmn/equipment-task.png) center center
+    no-repeat;
+  background-size: 80%;
+}
 .pattern-exclusive {
   background: url(../../assets/images/bpmn/exclusive.png) center center
     no-repeat;
@@ -212,6 +319,15 @@ function addNode(type: string) {
   background: url(../../assets/images/bpmn/time.png) center center no-repeat;
   background-size: 70%;
 }
+.pattern-or {
+  background: url(../../assets/images/bpmn/or.png) center center no-repeat;
+  background-size: 70%;
+}
+.pattern-and {
+  background: url(../../assets/images/bpmn/and.png) center center no-repeat;
+  background-size: 70%;
+}
+
 .pattern-ins {
   width: 36px;
   height: 36px;
