@@ -7,3 +7,6 @@ export const BASIC_DESCISION_GROUP = "basic_descision_group"; // 基础决策组
 
 export const GATEWAY_NODE = "gateway_node"; // 网关节点
 export const TASK_NODE = "task_node"; // 任务节点
+
+// 任务节点
+export const TASK_EQUIPMENT = "task-equipment"; // 设备任务节点

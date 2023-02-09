@@ -36,6 +36,7 @@ class UserTaskView extends RectNode {
       ]
     );
   }
+
   /**
    * 完全自定义节点外观方法
    */

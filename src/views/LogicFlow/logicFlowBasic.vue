@@ -16,6 +16,7 @@ import useInitLogicFlow from "./composition/useInitLogicFlow";
 import { useRoute } from "vue-router";
 import logicFlowAttr from "./logicFlowAttr.vue";
 import logicFlowTools from "@/components/logicTools/index.vue";
+import { onMounted, provide } from "vue";
 
 const route = useRoute();
 
@@ -23,6 +24,18 @@ const route = useRoute();
 const graphInstance = useInitLogicFlow();
 const lf = graphInstance.lf;
 const activeCell = graphInstance.activeCell;
+provide("activeCell", activeCell);
+provide("lf", lf);
+
+onMounted(() => {
+  if (lf.value) {
+    // 添加节点点击事件
+    lf.value.on("node:click", function ({ data }) {
+      console.log(data, "click");
+      activeCell.value = data;
+    });
+  }
+});
 </script>
 
 <style lang="scss" scoped>

@@ -12,9 +12,12 @@
       status-icon
     >
       <el-form-item label="类型">
-        <el-radio-group v-model="nodeInstance.nodeData.commandType">
+        <el-radio-group
+          v-model="nodeInstance.nodeData.commandType"
+          @change="nodeInstance.resetData()"
+        >
           <el-radio
-            v-for="item in nodeInstance.commandTypeMap"
+            v-for="item in nodeInstance.productIn.commandTypeMap"
             :label="item.id"
             :key="item.id"
           >
@@ -22,9 +25,11 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="设备产品类型" prop="tag">
+      <el-form-item label="设备产品类型" prop="componentId">
         <el-select
-          v-model="nodeInstance.nodeData.tag"
+          filterable
+          clearable
+          v-model="nodeInstance.nodeData.componentId"
           placeholder="请选择设备产品类型"
         >
           <el-option
@@ -35,21 +40,22 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="设备命令" prop="atag">
+      <el-form-item label="设备命令" prop="deviceCommand">
         <el-select
-          v-model="nodeInstance.nodeData.commond"
+          filterable
+          v-model="nodeInstance.nodeData.deviceCommand"
           placeholder="请选择设备命令"
         >
           <el-option
-            v-for="item in nodeInstance.productIn.deviceCommand"
-            :label="item.stdDescription"
+            v-for="item in nodeInstance.deviceCommand"
+            :label="item.description"
             :value="item.id"
             :key="item.id"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="命令参数" prop="name">
-        <el-input v-model="ruleForm.name" />
+      <el-form-item label="命令参数" prop="command">
+        <el-input v-model="nodeInstance.nodeData.command" />
       </el-form-item>
     </el-form>
   </div>
@@ -59,8 +65,7 @@
 import { reactive, ref } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
 import EquipmentNode from "@/modules/Node/EquipmentNode";
-import LogicFlow from "@logicflow/core";
-import { inject, onBeforeUnmount } from "vue";
+import { inject } from "vue";
 
 // 表单配置项
 const formSize = ref("default");
@@ -68,30 +73,31 @@ const formSize = ref("default");
 // 当前选中元素
 const activeCellData: any = inject("activeCell");
 // 当前画布实例
-const lf: LogicFlow = inject("lf") as LogicFlow;
-const activeId = activeCellData.value.id;
+// const lf: LogicFlow = inject("lf") as LogicFlow;
+// const activeId = activeCellData.value.id;
+console.log(activeCellData.value.id, "value");
 
-const nodeInstance = ref(new EquipmentNode(activeCellData.value.properties));
+const nodeInstance = ref(new EquipmentNode(activeCellData.value.data));
 
 // 组件销毁前进行数据的同步
-onBeforeUnmount(() => {
-  lf.value
-    .getNodeModelById(activeId)
-    .setProperties(nodeInstance.value.nodeData);
-});
+// onBeforeUnmount(() => {
+//   lf.value
+//     .getNodeModelById(activeId)
+//     .setProperties(nodeInstance.value.nodeData);
+// });
 
 const ruleFormRef = ref<FormInstance>();
-const ruleForm = reactive({
-  name: "",
-  tag: "",
-  atag: "",
-  group: "",
-  date2: "",
-  date1: "",
-  type: [],
-  resource: "",
-  desc: "",
-});
+// const ruleForm = reactive({
+//   name: "",
+//   componentId: "",
+//   acomponentId: "",
+//   group: "",
+//   date2: "",
+//   date1: "",
+//   type: [],
+//   resource: "",
+//   desc: "",
+// });
 
 const rules = reactive<FormRules>({
   name: [

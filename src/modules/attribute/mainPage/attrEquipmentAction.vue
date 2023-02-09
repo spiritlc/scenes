@@ -311,7 +311,7 @@
   </el-form>
 </template>
 <script>
-import { iotRequest } from "@/apis/api";
+import { iotRequest } from "@/infrastructure/apis/api";
 export default {
   props: {
     fragmentListData: {

@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { iotRequest } from "@/apis/api";
+import { iotRequest } from "@/infrastructure/apis/api";
 import getHMSfunc from "@/assets/js/getInitHMS";
 // 同步父数据
 import useSyncAttrData from "@/modules/attribute/useSyncAttrData";

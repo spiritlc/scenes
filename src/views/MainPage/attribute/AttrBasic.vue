@@ -1,9 +1,9 @@
 <template>
   <div class="flow-basic__attr">
-    <h4>设备属性</h4>
+    <h4>全局属性</h4>
     <el-form
       ref="ruleFormRef"
-      :model="nodeInstance.nodeData"
+      :model="ruleForm"
       :rules="rules"
       label-width="120px"
       class="demo-ruleForm"
@@ -11,45 +11,58 @@
       label-position="top"
       status-icon
     >
-      <el-form-item label="类型">
-        <el-radio-group v-model="nodeInstance.nodeData.commandType">
-          <el-radio
-            v-for="item in nodeInstance.commandTypeMap"
-            :label="item.id"
-            :key="item.id"
-          >
-            {{ item.name }}
-          </el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="设备产品类型" prop="tag">
-        <el-select
-          v-model="nodeInstance.nodeData.tag"
-          placeholder="请选择设备产品类型"
-        >
-          <el-option
-            v-for="item in nodeInstance.productIn.productTypeArr"
-            :label="item.prodtypeName"
-            :value="item.id"
-            :key="item.id"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="设备命令" prop="atag">
-        <el-select
-          v-model="nodeInstance.nodeData.commond"
-          placeholder="请选择设备命令"
-        >
-          <el-option
-            v-for="item in nodeInstance.productIn.deviceCommand"
-            :label="item.stdDescription"
-            :value="item.id"
-            :key="item.id"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="命令参数" prop="name">
+      <el-form-item label="场景名称" prop="name">
         <el-input v-model="ruleForm.name" />
+      </el-form-item>
+      <el-form-item label="场景分类标签" prop="tag">
+        <el-select v-model="ruleForm.tag" placeholder="请选择场景分类标签">
+          <el-option label="低碳节能" value="weiyu" />
+          <el-option label="安心居家" value="chufang" />
+          <el-option label="灯光氛围" value="anfang" />
+          <el-option label="健康睡眠" value="dengguang" />a
+          <el-option label="家庭空气" value="kongqi" />
+          <el-option label="居家环境" value="tongyong" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="场景标签" prop="atag">
+        <el-select v-model="ruleForm.atag" placeholder="请选择场景标签">
+          <el-option label="卫浴" value="weiyu" />
+          <el-option label="厨房" value="chufang" />
+          <el-option label="安防" value="anfang" />
+          <el-option label="灯光" value="dengguang" />
+          <el-option label="空气" value="kongqi" />
+          <el-option label="通用" value="tongyong" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="场景描述" prop="name">
+        <el-input v-model="ruleForm.name" type="textarea" />
+      </el-form-item>
+      <el-form-item label="关联分组" prop="group">
+        <el-select v-model="ruleForm.group" placeholder="请选择分组">
+          <el-option label="分组1" value="weiyu" />
+          <el-option label="分组2" value="chufang" />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="生效时间" prop="group">
+        <el-col :span="11">
+          <el-date-picker
+            v-model="ruleForm.date1"
+            type="date"
+            placeholder="Pick a date"
+            style="width: 100%"
+          />
+        </el-col>
+        <el-col :span="2" class="text-center">
+          <span class="text-gray-500">-</span>
+        </el-col>
+        <el-col :span="11">
+          <el-time-picker
+            v-model="ruleForm.date2"
+            placeholder="Pick a time"
+            style="width: 100%"
+          />
+        </el-col>
       </el-form-item>
     </el-form>
   </div>
@@ -58,28 +71,8 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
-import EquipmentNode from "@/modules/Node/EquipmentNode";
-import LogicFlow from "@logicflow/core";
-import { inject, onBeforeUnmount } from "vue";
 
-// 表单配置项
 const formSize = ref("default");
-
-// 当前选中元素
-const activeCellData: any = inject("activeCell");
-// 当前画布实例
-const lf: LogicFlow = inject("lf") as LogicFlow;
-const activeId = activeCellData.value.id;
-
-const nodeInstance = ref(new EquipmentNode(activeCellData.value.properties));
-
-// 组件销毁前进行数据的同步
-onBeforeUnmount(() => {
-  lf.value
-    .getNodeModelById(activeId)
-    .setProperties(nodeInstance.value.nodeData);
-});
-
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
   name: "",

@@ -2,7 +2,7 @@
   <div class="home">
     <!-- 左侧物料 -->
     <div class="menu-bar">
-      <material :dnd="dnd"></material>
+      <material></material>
     </div>
     <!-- 画布部分 -->
     <div class="canvas-card">
@@ -16,16 +16,12 @@
       <div id="container"></div>
     </div>
     <!-- 右侧属性栏 -->
-    <div class="attrs-bar" v-show="curSelectNode">
-      <attribute-block
-        v-show="curSelectNode"
-        :key="curSelectNode && curSelectNode.id"
-        :node="curSelectNode"
-        @sync-data="syncData"
-        @delNode="delNode"
-      >
-      </attribute-block>
-      <!-- :sing-data="curSelectNode?.data.attrData || {}" -->
+    <div class="attrs-bar">
+      <attribute-block :activeCell="activeCell"> </attribute-block>
+
+      <!-- @sync-data="syncData"
+        @delNode="delNode"? -->
+      <!-- :sing-data="activeCell?.data.attrData || {}" -->
       <!-- <footer class="footer">
         <el-button type="primary" size="small" @click="submit">确定</el-button>
       </footer> -->
@@ -41,7 +37,7 @@ import type { Node, Cell, Graph } from "@antv/x6";
 import { graphToolsT } from "@/assets/config/types/graphTools";
 import useInitGraph from "./composition/useInitGraph";
 // 自定义物料渲染
-import Material from "./material/index.vue";
+import Material from "./materialMenu.vue";
 // 工具栏
 import GraphTools from "@/components/graphTools/index.vue";
 import {
@@ -54,7 +50,8 @@ import {
 import attributeBlock from "./attribute/index.vue";
 import { useRoute } from "vue-router";
 import testSaveData from "./utils/testSaveData";
-import { BASIC_DESCISION_GROUP } from "@/modules/material/constants";
+// import { BASIC_DESCISION_GROUP } from "@/modules/material/constants";
+import "@/modules/material/register";
 
 const route = useRoute();
 
@@ -64,30 +61,32 @@ const graphInstance = useInitGraph();
 const graph = graphInstance.graph;
 const dnd = graphInstance.dnd;
 provide("graph", graph); // 向子组件注入画布实例
+provide("dnd", dnd); // 向子组件注入Dnd实例
 
 // 当前选中节点
-let curSelectNode = ref<Node | undefined>();
+let activeCell = ref<Node | undefined>();
 let BasicNode = ref<Element | undefined>();
+provide("activeCell", activeCell);
 // 通过子组件删除当前选中节点
-const delNode = () => {
-  graph.value && graph.value.removeNode(curSelectNode.value as Node);
-  curSelectNode.value = undefined;
-};
+// const delNode = () => {
+//   graph.value && graph.value.removeNode(activeCell.value as Node);
+//   activeCell.value = undefined;
+// };
 // 子组件数据同步给父组件
-const syncData = (data: any) => {
-  if (curSelectNode.value) {
-    // 决策组
-    if (curSelectNode.value.shape === BASIC_DESCISION_GROUP) {
-      curSelectNode.value.attr("text/text", data.descision);
-    } else {
-      const curSelectNodeData = curSelectNode.value.getData();
-      curSelectNode.value.setData({
-        ...curSelectNodeData,
-        attrData: data,
-      });
-    }
-  }
-};
+// const syncData = (data: any) => {
+//   if (activeCell.value) {
+//     // 决策组
+//     if (activeCell.value.shape === BASIC_DESCISION_GROUP) {
+//       activeCell.value.attr("text/text", data.descision);
+//     } else {
+//       const activeCellData = activeCell.value.getData();
+//       activeCell.value.setData({
+//         ...activeCellData,
+//         attrData: data,
+//       });
+//     }
+//   }
+// };
 // 保存数据
 const saveData = (data: { cells: Cell.Properties[] }) => {
   console.log("保存的数据是", data);
@@ -121,20 +120,20 @@ onMounted(() => {
         BasicNode.value.classList.add("active");
       }
       // 判断是否有选中过节点
-      if (curSelectNode.value) {
+      if (activeCell.value) {
         // 判断两次选中节点是否相同
-        if (curSelectNode.value !== node) {
-          curSelectNode.value = node;
+        if (activeCell.value !== node) {
+          activeCell.value = node;
         } else {
-          curSelectNode.value = undefined;
+          activeCell.value = undefined;
         }
       } else {
-        curSelectNode.value = node;
+        activeCell.value = node;
       }
     });
     // 添加画布空白点击事件
     graph.value.on("blank:click", () => {
-      curSelectNode.value = undefined;
+      activeCell.value = undefined;
       if (BasicNode.value) {
         BasicNode.value.classList.remove("active");
       }
@@ -179,11 +178,12 @@ onMounted(() => {
 }
 
 .menu-bar {
-  width: 260px;
+  width: 220px;
   height: 100%;
   margin-right: 20px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 h2 {
@@ -226,7 +226,6 @@ h2 {
 }
 
 .attrs-bar {
-  padding: 0 20px;
   width: 400px;
   overflow-y: scroll;
   margin-left: 20px;

@@ -1,5 +1,5 @@
 import { iotAxios } from "iot-axios";
-import { apiMethodsI } from "./types";
+import { apiMethodsI } from "../../apis/types";
 
 const env = process.env.NODE_ENV;
 
@@ -57,12 +57,17 @@ export default {
  * @param {params} params 参数
  * @param {headers} headers 请求头
  */
-export const iotRequest = (
-  method: keyof typeof apiMethodsI,
-  path: string,
-  params?: object,
-  headers?: object
-) => {
+export const iotRequest = ({
+  method = "post",
+  path,
+  params,
+  headers,
+}: {
+  method?: keyof typeof apiMethodsI;
+  path: string;
+  params?: object;
+  headers?: object;
+}) => {
   if (method.toLowerCase() === "get") {
     return iotAxios
       .get(baseapi[envapi].api + path, { params: params }, headers)

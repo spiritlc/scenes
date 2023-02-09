@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { iotRequest } from "@/apis/api";
+import { iotRequest } from "@/infrastructure/apis/api";
 import getHMSfunc from "@/assets/js/getInitHMS";
 export default {
   props: {

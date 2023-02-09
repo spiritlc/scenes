@@ -1,6 +1,6 @@
 // 初始化画布模型
 import { onMounted, ref } from "vue";
-import LogicFlow, { BaseEdgeModel, BaseNodeModel } from "@logicflow/core";
+import LogicFlow from "@logicflow/core";
 import "@logicflow/core/dist/style/index.css";
 import "@logicflow/extension/lib/style/index.css";
 import {
@@ -18,7 +18,7 @@ import setContextPad from "@/modules/logicElement/contextPad/setContextPad";
 
 export default function useInitLogicFlow() {
   const lf = ref<LogicFlow | undefined>(undefined);
-  const activeCell = ref<BaseNodeModel | BaseEdgeModel | null>(null);
+  const activeCell = ref<any>(null);
   const route = useRoute();
   const id = route.query.id as string;
 
@@ -116,12 +116,7 @@ export default function useInitLogicFlow() {
     //     },
     //   ],
     // });
-    // 添加节点点击事件
-    lf.value.on("node:click", function (data) {
-      console.log(data);
-      activeCell.value = data;
-    });
-    lf.value.on("blank:click", function (data) {
+    lf.value.on("blank:click", function ({ data }) {
       console.log(data);
       activeCell.value = null;
     });

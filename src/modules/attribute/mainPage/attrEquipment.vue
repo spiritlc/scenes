@@ -180,6 +180,7 @@
         <div class="command-param">
           <div class="command-left">
             <el-select
+              filterable
               v-model="ruleForm.operationSign"
               :disabled="ruleForm.noAlarm"
               popper-class="selectCustomAttrs"
@@ -202,6 +203,7 @@
               prop="commandParamSelect"
             >
               <el-select
+                filterable
                 v-model="ruleForm.commandParamSelect"
                 style="width: 100%"
                 placeholder="请选择参数"
@@ -278,7 +280,7 @@
   </el-form>
 </template>
 <script>
-import { iotRequest } from "@/apis/api";
+import { iotRequest } from "@/infrastructure/apis/api";
 // 同步父数据
 import useSyncAttrData from "@/modules/attribute/useSyncAttrData";
 

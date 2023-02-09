@@ -1,49 +1,37 @@
 <template>
-  <div class="attribute-block">
-    <div class="attribute-title">
-      <img :src="nodeData.icon" alt="" />
-      <h4>{{ nodeData.description }}</h4>
-    </div>
-    <!-- <el-button @click="delNode">删除</el-button> -->
-    <component v-if="renderAttr" v-bind="$attrs" :is="renderAttr"></component>
+  <div class="flow-attr__block">
+    <component :is="attrCompont"></component>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { Node } from "@antv/x6";
-import { getAttrTemplate } from "@/modules/attribute/index";
+import AttrBasic from "./AttrBasic.vue";
+import AttrEquipment from "./AttrEquipment.vue";
+// import logicFlowBasicServiceAttr from "./component/logicFlowBasicServiceAttr.vue";
+import { computed, inject } from "vue";
+import { TASK_EQUIPMENT } from "@/modules/material/constants";
 
-// const emit = defineEmits(["delNode"]);
-const props = defineProps<{
-  node: Node | undefined;
-}>();
-// 获取渲染属性模板
-const renderAttr = computed(() => {
-  if (nodeData.value.attr) {
-    return getAttrTemplate(nodeData.value.attr);
-  }
-  return null;
+const activeCell: any = inject("activeCell"); // 注入的当前被选中的元素
+
+// 属性ui-Map
+const attrMap: any = {
+  basic: AttrBasic,
+  [TASK_EQUIPMENT]: AttrEquipment,
+  "h-bpmn:serviceTask": AttrEquipment,
+};
+
+// 获取当前需要展示的组件UI容器
+const attrCompont = computed(() => {
+  console.log(activeCell.value);
+  const mapKey = activeCell.value ? activeCell.value.shape : "basic";
+  return attrMap[mapKey] || null;
 });
-
-const nodeData = computed(() => {
-  return (props.node && props.node.data) || {};
-});
-
-//   // 删除节点
-// const delNode = () => {
-//   emit("delNode");
-// };
 </script>
 
 <style lang="scss" scoped>
-.attribute-title {
-  display: flex;
-  align-items: center;
-  img {
-    width: 16px;
-    height: 16px;
-    margin-right: 12px;
-  }
+.flow-attr__block {
+  width: 400px;
+  height: 100%;
+  overflow: auto;
 }
 </style>

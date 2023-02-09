@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import { iotRequest } from "@/apis/api";
+import { iotRequest } from "@/infrastructure/apis/api";
 // 同步父数据
 import useSyncAttrData from "@/modules/attribute/useSyncAttrData";
 export default {

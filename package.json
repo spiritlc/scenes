@@ -35,6 +35,7 @@
     "element-plus": "^2.2.27",
     "insert-css": "^2.0.0",
     "iot-axios": "^1.1.1",
+    "mobx": "^6.7.0",
     "node-sass": "^8.0.0",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
